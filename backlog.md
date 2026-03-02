@@ -31,6 +31,10 @@
 - [x] **PBI-S.9: Step 7 - Character Charts**
     - UI: Detailed fields for each character (Age, Appearance, Backstory, Personality, Arc).
     - Context: Display Step 3/5 core traits for reference while deepening the profile.
+- [x] **PBI-S.10: Step 8 - The Scene List**
+    - UI: Dynamic spreadsheet using `st.data_editor` to manage the list of scenes.
+    - Features: POV Character selection (from Step 3 list), order numbering, and location tracking.
+    - Context: Display Step 6 narrative sections in expanders for reference.
 
 ---
 *Note: This backlog is for the Streamlit implementation branch.*

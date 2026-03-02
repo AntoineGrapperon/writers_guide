@@ -284,6 +284,51 @@ elif step == "7. Character Charts":
                 chart_data["Personality"] = st.text_area("Personality Traits", value=chart_data.get("Personality", ""), height=100, key=f"pers_{name}")
                 chart_data["Arc"] = st.text_area("Character Arc (How they change)", value=chart_data.get("Arc", ""), height=200, key=f"arc_{name}")
 
+# Step 8: The Scene List
+elif step == "8. The Scene List":
+    st.header("Step 8: The Scene List")
+    st.markdown("""
+    Break your four-page summary into a list of scenes. 
+    Each scene should have a clear POV character and a specific purpose.
+    """)
+
+    # References from Step 6
+    with st.expander("📄 Reference: Step 6 Detailed Narrative", expanded=False):
+        step6_pages = st.session_state.novel_data.get('step6_pages', [])
+        labels = ["Setup", "Disaster 1", "Disaster 2", "Disaster 3", "Resolution"]
+        for label, text in zip(labels, step6_pages):
+            st.write(f"**{label}:**")
+            st.write(text if text else "*(Empty)*")
+            st.divider()
+
+    # Get character names for POV dropdown
+    char_names = [c['Name'] for c in st.session_state.novel_data.get('characters', []) if c.get('Name')]
+    if not char_names:
+        char_names = ["Protagonist"]
+
+    # Initialize scene list if empty
+    if 'scene_list' not in st.session_state.novel_data or not st.session_state.novel_data['scene_list']:
+        st.session_state.novel_data['scene_list'] = [
+            {"Scene #": 1, "POV Character": char_names[0], "Description": "", "Location": ""}
+        ]
+
+    # Data Editor
+    edited_scenes = st.data_editor(
+        pd.DataFrame(st.session_state.novel_data['scene_list']),
+        num_rows="dynamic",
+        use_container_width=True,
+        column_config={
+            "Scene #": st.column_config.NumberColumn("Order", width="small", min_value=1),
+            "POV Character": st.column_config.SelectboxColumn("POV Character", options=char_names, width="medium"),
+            "Description": st.column_config.TextColumn("What happens?", width="large"),
+            "Location": st.column_config.TextColumn("Location", width="medium"),
+        }
+    )
+
+    # Save to state
+    st.session_state.novel_data['scene_list'] = edited_scenes.to_dict('records')
+    st.info("💡 Pro-tip: Aim for 40-80 scenes for a standard-length novel.")
+
 # Placeholder for other steps
 else:
     st.header(step)
