@@ -369,6 +369,70 @@ elif step == "9. The Narrative Outline":
                 )
                 st.session_state.novel_data['scene_outlines'][scene_id] = new_outline
 
+# Step 10: The First Draft
+elif step == "10. The First Draft":
+    st.header("Step 10: The First Draft")
+    st.markdown("""
+    It's time to write! Select a scene from your outline and start drafting. 
+    Your planning from previous steps is available as a reference.
+    """)
+
+    scenes = st.session_state.novel_data.get('scene_list', [])
+    
+    if not scenes or (len(scenes) == 1 and not scenes[0]['Description']):
+        st.warning("⚠️ No scenes found. Please complete the previous steps first.")
+    else:
+        # Initialize content dictionary if not present
+        if 'scene_content' not in st.session_state.novel_data:
+            st.session_state.novel_data['scene_content'] = {}
+
+        # Scene selection
+        scene_options = [f"Scene {s['Scene #']}: {s['Description'][:30]}..." for s in scenes]
+        selected_scene_idx = st.selectbox("Select a scene to write:", range(len(scene_options)), format_func=lambda x: scene_options[x])
+        
+        selected_scene = scenes[selected_scene_idx]
+        scene_num = selected_scene.get('Scene #', '?')
+        pov = selected_scene.get('POV Character', 'Unknown')
+        desc = selected_scene.get('Description', '')
+        
+        # Key for state (consistent with Step 9)
+        scene_id = f"scene_{scene_num}_{pov}_{desc[:20]}"
+        
+        col1, col2 = st.columns([1, 2])
+        
+        with col1:
+            st.subheader("📜 Reference")
+            st.write(f"**POV:** {pov}")
+            st.write(f"**Brief:** {desc}")
+            
+            with st.expander("📝 Scene Outline (Step 9)", expanded=True):
+                outline = st.session_state.novel_data.get('scene_outlines', {}).get(scene_id, "*(No outline found)*")
+                st.write(outline)
+            
+            with st.expander("👤 Character traits", expanded=False):
+                charts = st.session_state.novel_data.get('character_charts', {}).get(pov, {})
+                if charts:
+                    st.write(f"**Appearance:** {charts.get('Appearance', 'N/A')}")
+                    st.write(f"**Backstory:** {charts.get('Backstory', 'N/A')}")
+                    st.write(f"**Arc:** {charts.get('Arc', 'N/A')}")
+                else:
+                    st.write("No character chart found for this POV.")
+
+        with col2:
+            st.subheader(f"✍️ Writing: Scene {scene_num}")
+            current_prose = st.session_state.novel_data['scene_content'].get(scene_id, "")
+            new_prose = st.text_area(
+                "Write your prose here:",
+                value=current_prose,
+                height=600,
+                key=f"prose_{scene_id}",
+                label_visibility="collapsed"
+            )
+            st.session_state.novel_data['scene_content'][scene_id] = new_prose
+            
+            word_count = len(new_prose.split()) if new_prose else 0
+            st.caption(f"Word count for this scene: {word_count}")
+
 # Placeholder for other steps
 else:
     st.header(step)

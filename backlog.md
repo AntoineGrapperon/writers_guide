@@ -1,7 +1,7 @@
 # Product Backlog: "The Architect's Ledger" (Streamlit PoC)
 
 ## Epic: Streamlit Snowflake PoC (The "Rapid Sprout")
-**Goal:** Build a functional, in-memory web app that guides a writer through the first three steps of the Snowflake method.
+**Goal:** Build a functional, in-memory web app that guides a writer through the complete 10-step Snowflake method.
 
 - [x] **PBI-S.1: Foundation & Session State**
     - Setup: Create `requirements.txt` with `streamlit` and `pandas`.
@@ -38,6 +38,9 @@
 - [x] **PBI-S.11: Step 9 - The Narrative Outline**
     - UI: List of text areas for expanding each scene from Step 8 into a detailed outline.
     - Context: Display Step 8 scene metadata (POV, Brief, Location) in expanders for reference.
+- [x] **PBI-S.12: Step 10 - The First Draft**
+    - UI: Focused writing interface with scene selection.
+    - Context: Side-by-side view of the Step 9 outline and character charts while drafting prose.
 
 ---
 *Note: This backlog is for the Streamlit implementation branch.*
