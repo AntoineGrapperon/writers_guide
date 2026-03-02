@@ -21,6 +21,7 @@ st.sidebar.title("❄️ Snowflake Architect")
 step = st.sidebar.radio(
     "Go to Step:",
     [
+        "🏠 Home",
         "1. The One-Sentence Hook",
         "2. The One-Paragraph Summary",
         "3. Character Dossiers",
@@ -34,8 +35,27 @@ step = st.sidebar.radio(
     ]
 )
 
+# Home Page content
+if step == "🏠 Home":
+    st.header("🏠 Welcome to Snowflake Architect")
+    st.markdown("""
+    Writing a novel is hard. The **Snowflake Method**, created by Randy Ingermanson, makes it manageable by starting with a small "snowflake" of an idea and expanding it into a complete story.
+
+    ### ❄️ What is the Snowflake Method?
+    Instead of starting from page one and hoping for the best (the "Pantser" approach), the Snowflake Method is a "Plotter" strategy. You begin with a single sentence and systematically grow it into a full-length manuscript through ten structured steps.
+
+    ### 🛠️ How to use this tool:
+    1.  **Iterative Growth:** Each step builds upon the work you did in the previous one. 
+    2.  **Character & Plot:** You'll alternate between developing your story's plot and deepening your characters.
+    3.  **Flexibility:** Don't be afraid to go back to earlier steps! If you discover something new about a character in Step 5, update Step 1 to match.
+    4.  **Save Your Progress:** Use the **Download Draft** button in the sidebar to save your work locally. You can resume later by using the **Import Draft** button.
+
+    ### 🚀 Getting Started:
+    Select **"1. The One-Sentence Hook"** from the sidebar to begin your journey!
+    """)
+
 # Step 1: The One-Sentence Hook (PBI-S.2)
-if step == "1. The One-Sentence Hook":
+elif step == "1. The One-Sentence Hook":
     st.header("Step 1: The One-Sentence Hook")
     st.info("Write a single sentence that summarizes your novel. Aim for less than 15 words and avoid character names.")
 
