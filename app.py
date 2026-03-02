@@ -91,6 +91,43 @@ elif step == "2. The One-Paragraph Summary":
     # Save to state
     st.session_state.novel_data['step2_summary'] = summary
 
+# Step 3: Character Dossiers (PBI-S.4)
+elif step == "3. Character Dossiers":
+    st.header("Step 3: Character Dossiers")
+    st.markdown("""
+    Every story is driven by its characters. For each of your major characters, define the following:
+    *   **Motivation:** What do they want abstractly?
+    *   **Goal:** What is their concrete objective?
+    *   **Conflict:** What prevents them from reaching that goal?
+    *   **Epiphany:** What do they learn or how do they change?
+    """)
+
+    # Initialize dataframe-friendly list if empty
+    if not st.session_state.novel_data['characters']:
+        # Add a placeholder character to guide the user
+        st.session_state.novel_data['characters'] = [
+            {"Name": "Protagonist", "Motivation": "", "Goal": "", "Conflict": "", "Epiphany": ""}
+        ]
+
+    # Use st.data_editor for a spreadsheet-like experience
+    edited_df = st.data_editor(
+        pd.DataFrame(st.session_state.novel_data['characters']),
+        num_rows="dynamic",
+        use_container_width=True,
+        column_config={
+            "Name": st.column_config.TextColumn("Character Name", width="medium", help="The name of your character"),
+            "Motivation": st.column_config.TextColumn("Motivation (Abstract Want)", width="large"),
+            "Goal": st.column_config.TextColumn("Goal (Concrete Objective)", width="large"),
+            "Conflict": st.column_config.TextColumn("Conflict (The Obstacle)", width="large"),
+            "Epiphany": st.column_config.TextColumn("Epiphany (Lesson Learned)", width="large"),
+        }
+    )
+
+    # Save changes back to session state
+    st.session_state.novel_data['characters'] = edited_df.to_dict('records')
+    
+    st.info("💡 You can add new rows by clicking the '+' at the bottom of the table.")
+
 # Placeholder for other steps
 else:
     st.header(step)

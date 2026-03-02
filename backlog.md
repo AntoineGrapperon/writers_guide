@@ -13,7 +13,7 @@
 - [x] **PBI-S.3: Step 2 - The "Sprout" (Paragraph expansion)**
     - UI: Text area for the 5-sentence summary.
     - Guideline helper: Display the "3 disasters + 1 ending" structure.
-- [ ] **PBI-S.4: Step 3 - Character Dossiers (The "Cast")**
+- [x] **PBI-S.4: Step 3 - Character Dossiers (The "Cast")**
     - UI: Interface to CRUD (Create, Read, Update, Delete) characters.
     - Data Entry: Capture Name, Motivation, Goal, Conflict, and Epiphany.
 - [ ] **PBI-S.5: Snapshot & Export**
