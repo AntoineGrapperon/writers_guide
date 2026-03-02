@@ -96,7 +96,25 @@ else:
     st.header(step)
     st.write("This section is currently under construction for the Proof of Concept.")
 
-# PBI-S.5: Snapshot (Draft)
+# PBI-S.5: Snapshot & Import
 st.sidebar.divider()
+
+# Export
 if st.sidebar.button("💾 Export Draft (JSON)"):
     st.sidebar.json(st.session_state.novel_data)
+
+# Import
+uploaded_file = st.sidebar.file_uploader("📂 Import Draft (JSON)", type="json")
+if uploaded_file is not None:
+    import json
+    try:
+        imported_data = json.load(uploaded_file)
+        # Basic validation: check for required keys
+        if all(key in imported_data for key in ['step1_hook', 'step2_summary', 'characters']):
+            st.session_state.novel_data = imported_data
+            st.sidebar.success("✅ Data imported successfully!")
+            # Note: streamlit will rerun the script automatically on state change
+        else:
+            st.sidebar.error("❌ Invalid JSON format. Missing required fields.")
+    except Exception as e:
+        st.sidebar.error(f"❌ Error loading JSON: {e}")
