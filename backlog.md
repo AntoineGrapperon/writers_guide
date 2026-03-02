@@ -16,9 +16,12 @@
 - [x] **PBI-S.4: Step 3 - Character Dossiers (The "Cast")**
     - UI: Interface to CRUD (Create, Read, Update, Delete) characters.
     - Data Entry: Capture Name, Motivation, Goal, Conflict, and Epiphany.
-- [ ] **PBI-S.5: Snapshot & Export**
-    - Logic: Consolidate session state into JSON/Markdown format.
-    - UI: "Download My Novel Architecture" button.
+- [x] **PBI-S.5: Snapshot & Export**
+    - Logic: Consolidate session state into JSON format.
+    - UI: "Download My Novel Architecture" button and "Import JSON" uploader.
+- [x] **PBI-S.6: Step 4 - The One-Page Summary**
+    - UI: 5 text areas for expanding Step 2 sentences into paragraphs.
+    - Context: Display Step 2 sentences as prompts for expansion.
 
 ---
 *Note: This backlog is for the Streamlit implementation branch.*

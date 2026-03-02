@@ -128,6 +128,42 @@ elif step == "3. Character Dossiers":
     
     st.info("💡 You can add new rows by clicking the '+' at the bottom of the table.")
 
+# Step 4: The One-Page Summary
+elif step == "4. The One-Page Summary":
+    st.header("Step 4: The One-Page Summary")
+    st.markdown("""
+    Expand each of your five sentences from **Step 2** into a full paragraph. 
+    *   The first four paragraphs should end in a **disaster**.
+    *   The final paragraph should tell the **resolution**.
+    """)
+
+    # Initialize step 4 data if not present
+    if 'step4_paragraphs' not in st.session_state.novel_data:
+        st.session_state.novel_data['step4_paragraphs'] = ["", "", "", "", ""]
+
+    # Get Step 2 sentences to use as prompts
+    step2_text = st.session_state.novel_data['step2_summary']
+    sentences = [s.strip() + "." for s in step2_text.split('.') if s.strip()]
+    
+    # Ensure we have 5 prompts
+    prompts = sentences + ["(No summary provided in Step 2)"] * (5 - len(sentences))
+
+    labels = ["1. Setup", "2. Disaster 1", "3. Disaster 2", "4. Disaster 3", "5. Ending"]
+    
+    updated_paragraphs = []
+    for i in range(5):
+        st.subheader(labels[i])
+        st.caption(f"Prompt: {prompts[i]}")
+        para = st.text_area(
+            f"Paragraph {i+1}",
+            value=st.session_state.novel_data['step4_paragraphs'][i],
+            height=150,
+            key=f"para_{i}"
+        )
+        updated_paragraphs.append(para)
+
+    st.session_state.novel_data['step4_paragraphs'] = updated_paragraphs
+
 # Placeholder for other steps
 else:
     st.header(step)
@@ -137,20 +173,25 @@ else:
 st.sidebar.divider()
 
 # Export
-if st.sidebar.button("💾 Export Draft (JSON)"):
-    st.sidebar.json(st.session_state.novel_data)
+import json
+json_data = json.dumps(st.session_state.novel_data, indent=2)
+st.sidebar.download_button(
+    label="💾 Download Draft (JSON)",
+    data=json_data,
+    file_name="snowflake_draft.json",
+    mime="application/json"
+)
 
 # Import
 uploaded_file = st.sidebar.file_uploader("📂 Import Draft (JSON)", type="json")
 if uploaded_file is not None:
-    import json
     try:
         imported_data = json.load(uploaded_file)
-        # Basic validation: check for required keys
-        if all(key in imported_data for key in ['step1_hook', 'step2_summary', 'characters']):
+        # Basic validation: check for core required keys
+        required_keys = ['step1_hook', 'step2_summary', 'characters']
+        if all(key in imported_data for key in required_keys):
             st.session_state.novel_data = imported_data
             st.sidebar.success("✅ Data imported successfully!")
-            # Note: streamlit will rerun the script automatically on state change
         else:
             st.sidebar.error("❌ Invalid JSON format. Missing required fields.")
     except Exception as e:
