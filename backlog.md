@@ -25,6 +25,12 @@
 - [x] **PBI-S.7: Step 5 - Character Synopses**
     - UI: Dynamic list of text areas for each character defined in Step 3.
     - Context: Display Step 3 character traits (Motivation/Goal/Conflict) as reference.
+- [x] **PBI-S.8: Step 6 - The Four-Page Summary**
+    - UI: 5 large text areas for expanding Step 4 paragraphs into detailed narrative sections.
+    - Context: Display Step 4 paragraphs in expanders for reference.
+- [x] **PBI-S.9: Step 7 - Character Charts**
+    - UI: Detailed fields for each character (Age, Appearance, Backstory, Personality, Arc).
+    - Context: Display Step 3/5 core traits for reference while deepening the profile.
 
 ---
 *Note: This backlog is for the Streamlit implementation branch.*

@@ -204,6 +204,86 @@ elif step == "5. Character Synopses":
                     )
                     st.session_state.novel_data['character_synopses'][name] = new_synopsis
 
+# Step 6: The Four-Page Summary
+elif step == "6. The Four-Page Summary":
+    st.header("Step 6: The Four-Page Summary")
+    st.markdown("""
+    Expand your one-page summary into a much more detailed narrative. 
+    In the full Snowflake method, this would be about four pages of text.
+    """)
+
+    # Initialize step 6 data if not present
+    if 'step6_pages' not in st.session_state.novel_data:
+        st.session_state.novel_data['step6_pages'] = ["", "", "", "", ""]
+
+    # Get Step 4 paragraphs to use as prompts
+    step4_paras = st.session_state.novel_data.get('step4_paragraphs', ["", "", "", "", ""])
+    
+    labels = ["1. Detailed Setup", "2. Disaster 1 Expansion", "3. Disaster 2 Expansion", "4. Disaster 3 Expansion", "5. Resolution Expansion"]
+    
+    updated_pages = []
+    for i in range(5):
+        st.subheader(labels[i])
+        with st.expander("📄 Reference: Step 4 Paragraph", expanded=False):
+            st.write(step4_paras[i] if step4_paras[i] else "*(Empty)*")
+            
+        page_text = st.text_area(
+            f"Expansion for {labels[i]}",
+            value=st.session_state.novel_data['step6_pages'][i],
+            height=400,
+            key=f"page_{i}",
+            label_visibility="collapsed"
+        )
+        updated_pages.append(page_text)
+
+    st.session_state.novel_data['step6_pages'] = updated_pages
+
+# Step 7: Character Charts
+elif step == "7. Character Charts":
+    st.header("Step 7: Character Charts")
+    st.markdown("""
+    Deepen your characters. Flesh out their physical traits, history, and most importantly, 
+    how they will change by the end of the story.
+    """)
+
+    characters = st.session_state.novel_data.get('characters', [])
+    
+    if not characters or (len(characters) == 1 and characters[0]['Name'] == "Protagonist" and not characters[0]['Motivation']):
+        st.warning("⚠️ No characters found. Please go to **Step 3: Character Dossiers** to add your cast first.")
+    else:
+        # Initialize charts dictionary if not present
+        if 'character_charts' not in st.session_state.novel_data:
+            st.session_state.novel_data['character_charts'] = {}
+
+        for char in characters:
+            name = char.get('Name', 'Unnamed Character')
+            if not name: continue
+            
+            # Ensure an entry exists for this character
+            if name not in st.session_state.novel_data['character_charts']:
+                st.session_state.novel_data['character_charts'][name] = {
+                    "Age/Birth": "", "Appearance": "", "Backstory": "", "Personality": "", "Arc": ""
+                }
+            
+            with st.expander(f"👤 Character Chart: {name}", expanded=True):
+                # References
+                with st.container():
+                    st.caption("Step 3/5 Reference")
+                    cols = st.columns(3)
+                    cols[0].write(f"**Goal:** {char.get('Goal', 'N/A')}")
+                    cols[1].write(f"**Conflict:** {char.get('Conflict', 'N/A')}")
+                    cols[2].write(f"**Epiphany:** {char.get('Epiphany', 'N/A')}")
+
+                chart_data = st.session_state.novel_data['character_charts'][name]
+                
+                c1, c2 = st.columns(2)
+                chart_data["Age/Birth"] = c1.text_input("Age / Birth Date", value=chart_data.get("Age/Birth", ""), key=f"age_{name}")
+                chart_data["Appearance"] = c2.text_input("Physical Appearance", value=chart_data.get("Appearance", ""), key=f"app_{name}")
+                
+                chart_data["Backstory"] = st.text_area("History / Backstory", value=chart_data.get("Backstory", ""), height=150, key=f"back_{name}")
+                chart_data["Personality"] = st.text_area("Personality Traits", value=chart_data.get("Personality", ""), height=100, key=f"pers_{name}")
+                chart_data["Arc"] = st.text_area("Character Arc (How they change)", value=chart_data.get("Arc", ""), height=200, key=f"arc_{name}")
+
 # Placeholder for other steps
 else:
     st.header(step)
