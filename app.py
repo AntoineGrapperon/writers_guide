@@ -164,6 +164,46 @@ elif step == "4. The One-Page Summary":
 
     st.session_state.novel_data['step4_paragraphs'] = updated_paragraphs
 
+# Step 5: Character Synopses
+elif step == "5. Character Synopses":
+    st.header("Step 5: Character Synopses")
+    st.markdown("""
+    Write a one-page synopsis for each of your major characters. 
+    These synopses should tell the story **from that character's point of view**.
+    """)
+
+    characters = st.session_state.novel_data.get('characters', [])
+    
+    if not characters or (len(characters) == 1 and characters[0]['Name'] == "Protagonist" and not characters[0]['Motivation']):
+        st.warning("⚠️ No characters found. Please go to **Step 3: Character Dossiers** to add your cast first.")
+    else:
+        # Initialize synopses dictionary if not present
+        if 'character_synopses' not in st.session_state.novel_data:
+            st.session_state.novel_data['character_synopses'] = {}
+
+        for char in characters:
+            name = char.get('Name', 'Unnamed Character')
+            if not name: continue
+            
+            with st.expander(f"📖 POV Synopsis: {name}", expanded=True):
+                col1, col2 = st.columns([1, 2])
+                with col1:
+                    st.write("**Reference (Step 3):**")
+                    st.write(f"**Motivation:** {char.get('Motivation', 'N/A')}")
+                    st.write(f"**Goal:** {char.get('Goal', 'N/A')}")
+                    st.write(f"**Conflict:** {char.get('Conflict', 'N/A')}")
+                
+                with col2:
+                    current_synopsis = st.session_state.novel_data['character_synopses'].get(name, "")
+                    new_synopsis = st.text_area(
+                        f"Synopsis for {name}",
+                        value=current_synopsis,
+                        height=250,
+                        key=f"synopsis_{name}",
+                        label_visibility="collapsed"
+                    )
+                    st.session_state.novel_data['character_synopses'][name] = new_synopsis
+
 # Placeholder for other steps
 else:
     st.header(step)

@@ -22,6 +22,9 @@
 - [x] **PBI-S.6: Step 4 - The One-Page Summary**
     - UI: 5 text areas for expanding Step 2 sentences into paragraphs.
     - Context: Display Step 2 sentences as prompts for expansion.
+- [x] **PBI-S.7: Step 5 - Character Synopses**
+    - UI: Dynamic list of text areas for each character defined in Step 3.
+    - Context: Display Step 3 character traits (Motivation/Goal/Conflict) as reference.
 
 ---
 *Note: This backlog is for the Streamlit implementation branch.*
