@@ -7,6 +7,13 @@ if 'novel_data' not in st.session_state:
         'step1_hook': "",
         'step2_summary': "",
         'characters': [],
+        'step4_paragraphs': ["", "", "", "", ""],
+        'character_synopses': {},
+        'step6_pages': ["", "", "", "", ""],
+        'character_charts': {},
+        'scene_list': [],
+        'scene_outlines': {},
+        'scene_content': {},
     }
 
 # Sidebar Navigation
@@ -459,7 +466,21 @@ if uploaded_file is not None:
         # Basic validation: check for core required keys
         required_keys = ['step1_hook', 'step2_summary', 'characters']
         if all(key in imported_data for key in required_keys):
-            st.session_state.novel_data = imported_data
+            # Merge with default state to ensure all keys exist
+            new_data = {
+                'step1_hook': "",
+                'step2_summary': "",
+                'characters': [],
+                'step4_paragraphs': ["", "", "", "", ""],
+                'character_synopses': {},
+                'step6_pages': ["", "", "", "", ""],
+                'character_charts': {},
+                'scene_list': [],
+                'scene_outlines': {},
+                'scene_content': {},
+            }
+            new_data.update(imported_data)
+            st.session_state.novel_data = new_data
             st.sidebar.success("✅ Data imported successfully!")
         else:
             st.sidebar.error("❌ Invalid JSON format. Missing required fields.")
