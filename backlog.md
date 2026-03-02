@@ -2,11 +2,11 @@
 
 ## Epic 1: Foundation & Data Architecture
 **Goal:** Establish the core data models and API structure to support the relational complexity of the Snowflake method.
-- [ ] **PBI-1.1: Database Schema Design**
+- [x] **PBI-1.1: Database Schema Design**
     - Design PostgreSQL schema for `Projects`, `Characters`, `Threads` (subplots), `Events`, `Scenes`, and `Chapters`.
     - define relationships: Events belong to Threads; Scenes link to Characters (POV) and Chapters.
     - *Deliverable:* valid `.sql` schema file.
-- [ ] **PBI-1.2: Project Initialization (Backend)**
+- [x] **PBI-1.2: Project Initialization (Backend)**
     - Set up Node.js/Express (TS) project structure.
     - Configure TypeORM/Prisma for database interaction.
     - *Deliverable:* compiling backend with health check API.
