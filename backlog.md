@@ -10,7 +10,7 @@
     - Set up Node.js/Express (TS) project structure.
     - Configure TypeORM/Prisma for database interaction.
     - *Deliverable:* compiling backend with health check API.
-- [ ] **PBI-1.3: Project Initialization (Frontend)**
+- [x] **PBI-1.3: Project Initialization (Frontend)**
     - Set up React (Vite + TS) project.
     - Configure routing (TanStack Router) and state management (Zustand/Context).
     - *Deliverable:* running frontend shell.
