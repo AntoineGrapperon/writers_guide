@@ -52,14 +52,49 @@ if step == "1. The One-Sentence Hook":
     # Save to state
     st.session_state.novel_data['step1_hook'] = hook
 
+# Step 2: The One-Paragraph Summary (PBI-S.3)
+elif step == "2. The One-Paragraph Summary":
+    st.header("Step 2: The One-Paragraph Summary")
+    
+    st.markdown("""
+    Expand your one-sentence hook into a full paragraph consisting of **five sentences**:
+    1.  **Setup:** Introduction of the story and characters.
+    2.  **Disaster 1:** The first major conflict or setback.
+    3.  **Disaster 2:** The conflict escalates.
+    4.  **Disaster 3:** The climax or turning point.
+    5.  **Ending:** The resolution.
+    """)
+
+    with st.expander("ℹ️ Why this structure?", expanded=True):
+        st.info("This 'Three Disasters + Ending' structure ensures your story has rising tension and a clear arc from the very beginning.")
+
+    # Input
+    summary = st.text_area(
+        "Draft your summary:",
+        value=st.session_state.novel_data['step2_summary'],
+        height=200,
+        placeholder="Sentence 1 (Setup)... Sentence 2 (Disaster 1)... Sentence 3 (Disaster 2)... Sentence 4 (Disaster 3)... Sentence 5 (Ending)..."
+    )
+
+    # Logic: Sentence count (approximate)
+    sentence_count = len([s for s in summary.split('.') if s.strip()]) if summary else 0
+    st.write(f"**Sentence Count:** {sentence_count} / 5")
+
+    # Validation
+    if sentence_count == 5:
+        st.success("✅ Perfect structure! You have exactly 5 sentences.")
+    elif sentence_count > 5:
+        st.warning("⚠️ You have more than 5 sentences. Try to combine ideas to keep it punchy.")
+    elif 0 < sentence_count < 5:
+        st.info(f"You have {sentence_count} sentences. Keep going until you hit 5!")
+
+    # Save to state
+    st.session_state.novel_data['step2_summary'] = summary
+
 # Placeholder for other steps
 else:
     st.header(step)
     st.write("This section is currently under construction for the Proof of Concept.")
-    if step == "2. The One-Paragraph Summary":
-        st.info("Coming soon: PBI-S.3")
-    elif step == "3. Character Dossiers":
-        st.info("Coming soon: PBI-S.4")
 
 # PBI-S.5: Snapshot (Draft)
 st.sidebar.divider()

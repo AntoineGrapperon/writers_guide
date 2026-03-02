@@ -10,7 +10,7 @@
 - [x] **PBI-S.2: Step 1 - The "Hook" (Sentence Expansion)**
     - UI: Page for Step 1 with live word counter.
     - Validation: Visual feedback for the 15-word constraint.
-- [ ] **PBI-S.3: Step 2 - The "Sprout" (Paragraph expansion)**
+- [x] **PBI-S.3: Step 2 - The "Sprout" (Paragraph expansion)**
     - UI: Text area for the 5-sentence summary.
     - Guideline helper: Display the "3 disasters + 1 ending" structure.
 - [ ] **PBI-S.4: Step 3 - Character Dossiers (The "Cast")**
