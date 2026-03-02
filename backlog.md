@@ -35,6 +35,9 @@
     - UI: Dynamic spreadsheet using `st.data_editor` to manage the list of scenes.
     - Features: POV Character selection (from Step 3 list), order numbering, and location tracking.
     - Context: Display Step 6 narrative sections in expanders for reference.
+- [x] **PBI-S.11: Step 9 - The Narrative Outline**
+    - UI: List of text areas for expanding each scene from Step 8 into a detailed outline.
+    - Context: Display Step 8 scene metadata (POV, Brief, Location) in expanders for reference.
 
 ---
 *Note: This backlog is for the Streamlit implementation branch.*

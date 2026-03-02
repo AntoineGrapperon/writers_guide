@@ -329,6 +329,46 @@ elif step == "8. The Scene List":
     st.session_state.novel_data['scene_list'] = edited_scenes.to_dict('records')
     st.info("💡 Pro-tip: Aim for 40-80 scenes for a standard-length novel.")
 
+# Step 9: The Narrative Outline
+elif step == "9. The Narrative Outline":
+    st.header("Step 9: The Narrative Outline")
+    st.markdown("""
+    Expand each scene from your **Step 8 Scene List** into a detailed narrative outline. 
+    This is your final check of the story's flow before you start writing the actual draft.
+    """)
+
+    scenes = st.session_state.novel_data.get('scene_list', [])
+    
+    if not scenes or (len(scenes) == 1 and not scenes[0]['Description']):
+         st.warning("⚠️ No scenes found. Please go to **Step 8: The Scene List** to define your scenes first.")
+    else:
+        # Initialize outlines dictionary if not present
+        if 'scene_outlines' not in st.session_state.novel_data:
+            st.session_state.novel_data['scene_outlines'] = {}
+
+        for scene in scenes:
+            scene_num = scene.get('Scene #', '?')
+            pov = scene.get('POV Character', 'Unknown')
+            desc = scene.get('Description', 'No description')
+            loc = scene.get('Location', 'TBD')
+            
+            # Key for state
+            scene_id = f"scene_{scene_num}_{pov}_{desc[:20]}"
+            
+            with st.expander(f"🎬 Scene {scene_num}: {desc[:50]}...", expanded=True):
+                st.caption(f"POV: {pov} | Location: {loc}")
+                st.write(f"**Brief:** {desc}")
+                
+                current_outline = st.session_state.novel_data['scene_outlines'].get(scene_id, "")
+                new_outline = st.text_area(
+                    f"Detailed Outline for Scene {scene_num}",
+                    value=current_outline,
+                    height=200,
+                    key=f"outline_{scene_id}",
+                    label_visibility="collapsed"
+                )
+                st.session_state.novel_data['scene_outlines'][scene_id] = new_outline
+
 # Placeholder for other steps
 else:
     st.header(step)
