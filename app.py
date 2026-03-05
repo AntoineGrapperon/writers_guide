@@ -344,7 +344,7 @@ elif step == "7. Character Charts":
                 chart_data["Personality"] = st.text_area("Personality Traits", value=chart_data.get("Personality", ""), height=100, key=f"pers_{name}")
                 chart_data["Arc"] = st.text_area("Character Arc (How they change)", value=chart_data.get("Arc", ""), height=200, key=f"arc_{name}")
 
-# Step 8: The Scene List
+# Step 8: The Scene List (PBI-S.14)
 elif step == "8. The Scene List":
     st.header("Step 8: The Scene List")
     st.markdown("""
@@ -352,42 +352,98 @@ elif step == "8. The Scene List":
     Each scene should have a clear POV character and a specific purpose.
     """)
 
-    # References from Step 6
-    with st.expander("📄 Reference: Step 6 Detailed Narrative", expanded=False):
-        step6_pages = st.session_state.novel_data.get('step6_pages', [])
-        labels = ["Setup", "Disaster 1", "Disaster 2", "Disaster 3", "Resolution"]
-        for label, text in zip(labels, step6_pages):
-            st.write(f"**{label}:**")
-            st.write(text if text else "*(Empty)*")
-            st.divider()
-
-    # Get character names for POV dropdown
+    # Get labels and Step 6 content for context
+    sections = ["Setup", "Disaster 1", "Disaster 2", "Disaster 3", "Resolution"]
+    step6_pages = st.session_state.novel_data.get('step6_pages', [""] * 5)
+    
+    # Get character names for POV selection
     char_names = [c['Name'] for c in st.session_state.novel_data.get('characters', []) if c.get('Name')]
     if not char_names:
         char_names = ["Protagonist"]
 
+    # Migrate existing scenes to include 'Section' if missing
+    if 'scene_list' not in st.session_state.novel_data:
+        st.session_state.novel_data['scene_list'] = []
+    
+    for scene in st.session_state.novel_data['scene_list']:
+        if 'Section' not in scene:
+            scene['Section'] = "Setup"
+
     # Initialize scene list if empty
-    if 'scene_list' not in st.session_state.novel_data or not st.session_state.novel_data['scene_list']:
+    if not st.session_state.novel_data['scene_list']:
         st.session_state.novel_data['scene_list'] = [
-            {"Scene #": 1, "POV Character": char_names[0], "Description": "", "Location": ""}
+            {"POV Character": char_names[0], "Description": "Opening scene...", "Location": "TBD", "Section": "Setup"}
         ]
 
-    # Data Editor
-    edited_scenes = st.data_editor(
-        pd.DataFrame(st.session_state.novel_data['scene_list']),
-        num_rows="dynamic",
-        use_container_width=True,
-        column_config={
-            "Scene #": st.column_config.NumberColumn("Order", width="small", min_value=1),
-            "POV Character": st.column_config.SelectboxColumn("POV Character", options=char_names, width="medium"),
-            "Description": st.column_config.TextColumn("What happens?", width="large"),
-            "Location": st.column_config.TextColumn("Location", width="medium"),
-        }
-    )
+    # Display sections as expanders
+    for i, section_label in enumerate(sections):
+        with st.expander(f"📂 Section {i+1}: {section_label}", expanded=(i == 0)):
+            # Context from Step 6
+            st.caption("Reference (Step 6 Expansion):")
+            st.info(step6_pages[i] if step6_pages[i] else "*(No content from Step 6)*")
+            
+            # Filter scenes for this section
+            section_scenes = [s for s in st.session_state.novel_data['scene_list'] if s.get('Section') == section_label]
+            
+            for j, scene in enumerate(section_scenes):
+                # Find global index in scene_list
+                global_idx = st.session_state.novel_data['scene_list'].index(scene)
+                
+                with st.container(border=True):
+                    c1, c2, c3 = st.columns([2, 2, 1])
+                    
+                    with c1:
+                        # POV Selection
+                        scene['POV Character'] = st.selectbox(
+                            f"POV Character", 
+                            options=char_names, 
+                            index=char_names.index(scene['POV Character']) if scene['POV Character'] in char_names else 0,
+                            key=f"scene_pov_{global_idx}"
+                        )
+                    with c2:
+                        # Location
+                        scene['Location'] = st.text_input(
+                            f"Location", 
+                            value=scene.get('Location', ""), 
+                            key=f"scene_loc_{global_idx}"
+                        )
+                    with c3:
+                        # Actions
+                        st.write("") # Spacer
+                        col_move, col_del = st.columns(2)
+                        with col_del:
+                            if st.button("🗑️", key=f"del_scene_{global_idx}"):
+                                st.session_state.novel_data['scene_list'].pop(global_idx)
+                                st.rerun()
+                        with col_move:
+                            # Reordering could be complex in a filtered view, so we'll offer a simple 'Move to Section'
+                            target_section = st.selectbox(
+                                "Move", 
+                                options=sections, 
+                                index=sections.index(section_label),
+                                key=f"move_scene_{global_idx}",
+                                label_visibility="collapsed"
+                            )
+                            if target_section != section_label:
+                                st.session_state.novel_data['scene_list'][global_idx]['Section'] = target_section
+                                st.rerun()
 
-    # Save to state
-    st.session_state.novel_data['scene_list'] = edited_scenes.to_dict('records')
-    st.info("💡 Pro-tip: Aim for 40-80 scenes for a standard-length novel.")
+                    # Description
+                    scene['Description'] = st.text_area(
+                        "What happens in this scene?", 
+                        value=scene.get('Description', ""), 
+                        key=f"scene_desc_{global_idx}",
+                        height=100
+                    )
+
+            # Add scene to this section
+            if st.button(f"➕ Add Scene to {section_label}", key=f"add_to_{section_label}"):
+                st.session_state.novel_data['scene_list'].append(
+                    {"POV Character": char_names[0], "Description": "", "Location": "TBD", "Section": section_label}
+                )
+                st.rerun()
+
+    st.info("💡 Pro-tip: Use sections to ensure your plot beats from Step 6 are fully developed.")
 
 # Step 9: The Narrative Outline
 elif step == "9. The Narrative Outline":
