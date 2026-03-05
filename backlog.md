@@ -29,5 +29,10 @@
     - Context: Display the relevant Step 6 expansion text inside each section for reference.
     - Management: Add buttons to reorder scenes or move them between sections.
 
+- [x] **PBI-S.15: Step 8/9 Synchronization - Scene Reordering Fix**
+    - Bug Fix: Ensure reordering in Step 8 is reflected in Step 9 and Step 10.
+    - Implementation: Add unique IDs to scenes and sort by narrative section in all downstream steps.
+    - UX: Add explicit "Move Up/Down" buttons for scenes within Step 8.
+
 ---
 *Note: This backlog is for the Streamlit implementation branch.*
