@@ -118,7 +118,7 @@ elif step == "2. The One-Paragraph Summary":
     # Save to state
     st.session_state.novel_data['step2_summary'] = summary
 
-# Step 3: Character Dossiers (PBI-S.4)
+# Step 3: Character Dossiers (PBI-S.13)
 elif step == "3. Character Dossiers":
     st.header("Step 3: Character Dossiers")
     st.markdown("""
@@ -129,31 +129,64 @@ elif step == "3. Character Dossiers":
     *   **Epiphany:** What do they learn or how do they change?
     """)
 
-    # Initialize dataframe-friendly list if empty
+    # Initialize list if empty
     if not st.session_state.novel_data['characters']:
-        # Add a placeholder character to guide the user
         st.session_state.novel_data['characters'] = [
             {"Name": "Protagonist", "Motivation": "", "Goal": "", "Conflict": "", "Epiphany": ""}
         ]
 
-    # Use st.data_editor for a spreadsheet-like experience
-    edited_df = st.data_editor(
-        pd.DataFrame(st.session_state.novel_data['characters']),
-        num_rows="dynamic",
-        use_container_width=True,
-        column_config={
-            "Name": st.column_config.TextColumn("Character Name", width="medium", help="The name of your character"),
-            "Motivation": st.column_config.TextColumn("Motivation (Abstract Want)", width="large"),
-            "Goal": st.column_config.TextColumn("Goal (Concrete Objective)", width="large"),
-            "Conflict": st.column_config.TextColumn("Conflict (The Obstacle)", width="large"),
-            "Epiphany": st.column_config.TextColumn("Epiphany (Lesson Learned)", width="large"),
-        }
-    )
+    # Display characters as cards
+    for i, char in enumerate(st.session_state.novel_data['characters']):
+        with st.container(border=True):
+            col_header, col_delete = st.columns([5, 1])
+            
+            with col_header:
+                # Update name directly in session state
+                st.session_state.novel_data['characters'][i]['Name'] = st.text_input(
+                    "Character Name", 
+                    value=char['Name'], 
+                    key=f"char_name_{i}",
+                    label_visibility="collapsed"
+                )
+            
+            with col_delete:
+                if st.button("🗑️", key=f"del_char_{i}", help="Delete this character"):
+                    st.session_state.novel_data['characters'].pop(i)
+                    st.rerun()
 
-    # Save changes back to session state
-    st.session_state.novel_data['characters'] = edited_df.to_dict('records')
-    
-    st.info("💡 You can add new rows by clicking the '+' at the bottom of the table.")
+            c1, c2 = st.columns(2)
+            with c1:
+                st.session_state.novel_data['characters'][i]['Motivation'] = st.text_area(
+                    "Motivation (Abstract Want)", 
+                    value=char['Motivation'], 
+                    key=f"char_mot_{i}", 
+                    height=100
+                )
+                st.session_state.novel_data['characters'][i]['Goal'] = st.text_area(
+                    "Goal (Concrete Objective)", 
+                    value=char['Goal'], 
+                    key=f"char_goal_{i}", 
+                    height=100
+                )
+            with c2:
+                st.session_state.novel_data['characters'][i]['Conflict'] = st.text_area(
+                    "Conflict (The Obstacle)", 
+                    value=char['Conflict'], 
+                    key=f"char_conf_{i}", 
+                    height=100
+                )
+                st.session_state.novel_data['characters'][i]['Epiphany'] = st.text_area(
+                    "Epiphany (Lesson Learned)", 
+                    value=char['Epiphany'], 
+                    key=f"char_epi_{i}", 
+                    height=100
+                )
+
+    if st.button("➕ Add Character"):
+        st.session_state.novel_data['characters'].append(
+            {"Name": f"Character {len(st.session_state.novel_data['characters']) + 1}", "Motivation": "", "Goal": "", "Conflict": "", "Epiphany": ""}
+        )
+        st.rerun()
 
 # Step 4: The One-Page Summary
 elif step == "4. The One-Page Summary":

@@ -42,5 +42,10 @@
     - UI: Focused writing interface with scene selection.
     - Context: Side-by-side view of the Step 9 outline and character charts while drafting prose.
 
+- [x] **PBI-S.13: Step 3 Refinement - Character Cards**
+    - UI: Replace `st.data_editor` in Step 3 with a grid of editable character cards.
+    - UX: Individual "Add Character" and "Delete" actions for better control.
+    - Layout: Clearer grouping of Motivation, Goal, Conflict, and Epiphany for each character.
+
 ---
 *Note: This backlog is for the Streamlit implementation branch.*
