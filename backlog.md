@@ -34,5 +34,10 @@
     - Implementation: Add unique IDs to scenes and sort by narrative section in all downstream steps.
     - UX: Add explicit "Move Up/Down" buttons for scenes within Step 8.
 
+- [x] **PBI-S.16: Multiple Novels Support**
+    - UI: Add a "Project Manager" to the sidebar to create, select, and delete novels.
+    - State: Refactor `st.session_state` to store multiple novels in a dictionary.
+    - Export/Import: Support exporting all novels as an archive and importing old single-novel drafts as new projects.
+
 ---
 *Note: This backlog is for the Streamlit implementation branch.*

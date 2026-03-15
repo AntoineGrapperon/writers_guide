@@ -1,9 +1,11 @@
 import streamlit as st
 import pandas as pd
+import json
+import uuid
 
-# PBI-S.1: Session State Initialization
-if 'novel_data' not in st.session_state:
-    st.session_state.novel_data = {
+# Helper to create a new novel structure
+def create_empty_novel():
+    return {
         'step1_hook': "",
         'step2_summary': "",
         'characters': [],
@@ -16,8 +18,56 @@ if 'novel_data' not in st.session_state:
         'scene_content': {},
     }
 
+# PBI-S.1: Session State Initialization
+if 'novels' not in st.session_state:
+    # Migration or fresh start
+    if 'novel_data' in st.session_state:
+        st.session_state.novels = {"My First Novel": st.session_state.novel_data}
+    else:
+        st.session_state.novels = {"My First Novel": create_empty_novel()}
+
+if 'current_novel' not in st.session_state:
+    st.session_state.current_novel = list(st.session_state.novels.keys())[0]
+
+# Shortcut for the current novel data
+novel_data = st.session_state.novels[st.session_state.current_novel]
+
 # Sidebar Navigation
 st.sidebar.title("❄️ Snowflake Architect")
+
+# Project Manager
+st.sidebar.divider()
+st.sidebar.subheader("📖 My Novels")
+
+# Select Novel
+novel_list = list(st.session_state.novels.keys())
+current_idx = novel_list.index(st.session_state.current_novel) if st.session_state.current_novel in novel_list else 0
+selected_novel = st.sidebar.selectbox("Active Novel:", novel_list, index=current_idx)
+
+if selected_novel != st.session_state.current_novel:
+    st.session_state.current_novel = selected_novel
+    st.rerun()
+
+# Add New Novel
+with st.sidebar.expander("➕ New Novel"):
+    new_novel_name = st.text_input("Novel Title", key="new_novel_name")
+    if st.button("Create"):
+        if new_novel_name and new_novel_name not in st.session_state.novels:
+            st.session_state.novels[new_novel_name] = create_empty_novel()
+            st.session_state.current_novel = new_novel_name
+            st.rerun()
+        elif new_novel_name:
+            st.error("Title already exists!")
+
+# Delete Novel
+if len(st.session_state.novels) > 1:
+    if st.sidebar.button("🗑️ Delete Current Novel"):
+        del st.session_state.novels[st.session_state.current_novel]
+        st.session_state.current_novel = list(st.session_state.novels.keys())[0]
+        st.rerun()
+
+st.sidebar.divider()
+
 step = st.sidebar.radio(
     "Go to Step:",
     [
@@ -37,7 +87,7 @@ step = st.sidebar.radio(
 
 # Home Page content
 if step == "🏠 Home":
-    st.header("🏠 Welcome to Snowflake Architect")
+    st.header(f"🏠 Welcome to: {st.session_state.current_novel}")
     st.markdown("""
     Writing a novel is hard. The **Snowflake Method**, created by Randy Ingermanson, makes it manageable by starting with a small "snowflake" of an idea and expanding it into a complete story.
 
@@ -62,7 +112,7 @@ elif step == "1. The One-Sentence Hook":
     # Input
     hook = st.text_input(
         "Enter your hook:",
-        value=st.session_state.novel_data['step1_hook'],
+        value=novel_data['step1_hook'],
         placeholder="e.g., A scientist discovers a way to communicate with trees, but they only want to complain."
     )
 
@@ -77,7 +127,7 @@ elif step == "1. The One-Sentence Hook":
         st.success("✅ Great! This is a concise and powerful hook.")
 
     # Save to state
-    st.session_state.novel_data['step1_hook'] = hook
+    novel_data['step1_hook'] = hook
 
 # Step 2: The One-Paragraph Summary (PBI-S.3)
 elif step == "2. The One-Paragraph Summary":
@@ -98,7 +148,7 @@ elif step == "2. The One-Paragraph Summary":
     # Input
     summary = st.text_area(
         "Draft your summary:",
-        value=st.session_state.novel_data['step2_summary'],
+        value=novel_data['step2_summary'],
         height=200,
         placeholder="Sentence 1 (Setup)... Sentence 2 (Disaster 1)... Sentence 3 (Disaster 2)... Sentence 4 (Disaster 3)... Sentence 5 (Ending)..."
     )
@@ -116,7 +166,7 @@ elif step == "2. The One-Paragraph Summary":
         st.info(f"You have {sentence_count} sentences. Keep going until you hit 5!")
 
     # Save to state
-    st.session_state.novel_data['step2_summary'] = summary
+    novel_data['step2_summary'] = summary
 
 # Step 3: Character Dossiers (PBI-S.13)
 elif step == "3. Character Dossiers":
@@ -130,19 +180,19 @@ elif step == "3. Character Dossiers":
     """)
 
     # Initialize list if empty
-    if not st.session_state.novel_data['characters']:
-        st.session_state.novel_data['characters'] = [
+    if not novel_data['characters']:
+        novel_data['characters'] = [
             {"Name": "Protagonist", "Motivation": "", "Goal": "", "Conflict": "", "Epiphany": ""}
         ]
 
     # Display characters as cards
-    for i, char in enumerate(st.session_state.novel_data['characters']):
+    for i, char in enumerate(novel_data['characters']):
         with st.container(border=True):
             col_header, col_delete = st.columns([5, 1])
             
             with col_header:
                 # Update name directly in session state
-                st.session_state.novel_data['characters'][i]['Name'] = st.text_input(
+                novel_data['characters'][i]['Name'] = st.text_input(
                     "Character Name", 
                     value=char['Name'], 
                     key=f"char_name_{i}",
@@ -151,31 +201,31 @@ elif step == "3. Character Dossiers":
             
             with col_delete:
                 if st.button("🗑️", key=f"del_char_{i}", help="Delete this character"):
-                    st.session_state.novel_data['characters'].pop(i)
+                    novel_data['characters'].pop(i)
                     st.rerun()
 
             c1, c2 = st.columns(2)
             with c1:
-                st.session_state.novel_data['characters'][i]['Motivation'] = st.text_area(
+                novel_data['characters'][i]['Motivation'] = st.text_area(
                     "Motivation (Abstract Want)", 
                     value=char['Motivation'], 
                     key=f"char_mot_{i}", 
                     height=100
                 )
-                st.session_state.novel_data['characters'][i]['Goal'] = st.text_area(
+                novel_data['characters'][i]['Goal'] = st.text_area(
                     "Goal (Concrete Objective)", 
                     value=char['Goal'], 
                     key=f"char_goal_{i}", 
                     height=100
                 )
             with c2:
-                st.session_state.novel_data['characters'][i]['Conflict'] = st.text_area(
+                novel_data['characters'][i]['Conflict'] = st.text_area(
                     "Conflict (The Obstacle)", 
                     value=char['Conflict'], 
                     key=f"char_conf_{i}", 
                     height=100
                 )
-                st.session_state.novel_data['characters'][i]['Epiphany'] = st.text_area(
+                novel_data['characters'][i]['Epiphany'] = st.text_area(
                     "Epiphany (Lesson Learned)", 
                     value=char['Epiphany'], 
                     key=f"char_epi_{i}", 
@@ -183,8 +233,8 @@ elif step == "3. Character Dossiers":
                 )
 
     if st.button("➕ Add Character"):
-        st.session_state.novel_data['characters'].append(
-            {"Name": f"Character {len(st.session_state.novel_data['characters']) + 1}", "Motivation": "", "Goal": "", "Conflict": "", "Epiphany": ""}
+        novel_data['characters'].append(
+            {"Name": f"Character {len(novel_data['characters']) + 1}", "Motivation": "", "Goal": "", "Conflict": "", "Epiphany": ""}
         )
         st.rerun()
 
@@ -198,11 +248,11 @@ elif step == "4. The One-Page Summary":
     """)
 
     # Initialize step 4 data if not present
-    if 'step4_paragraphs' not in st.session_state.novel_data:
-        st.session_state.novel_data['step4_paragraphs'] = ["", "", "", "", ""]
+    if 'step4_paragraphs' not in novel_data:
+        novel_data['step4_paragraphs'] = ["", "", "", "", ""]
 
     # Get Step 2 sentences to use as prompts
-    step2_text = st.session_state.novel_data['step2_summary']
+    step2_text = novel_data['step2_summary']
     sentences = [s.strip() + "." for s in step2_text.split('.') if s.strip()]
     
     # Ensure we have 5 prompts
@@ -216,13 +266,13 @@ elif step == "4. The One-Page Summary":
         st.caption(f"Prompt: {prompts[i]}")
         para = st.text_area(
             f"Paragraph {i+1}",
-            value=st.session_state.novel_data['step4_paragraphs'][i],
+            value=novel_data['step4_paragraphs'][i],
             height=150,
             key=f"para_{i}"
         )
         updated_paragraphs.append(para)
 
-    st.session_state.novel_data['step4_paragraphs'] = updated_paragraphs
+    novel_data['step4_paragraphs'] = updated_paragraphs
 
 # Step 5: Character Synopses
 elif step == "5. Character Synopses":
@@ -232,14 +282,14 @@ elif step == "5. Character Synopses":
     These synopses should tell the story **from that character's point of view**.
     """)
 
-    characters = st.session_state.novel_data.get('characters', [])
+    characters = novel_data.get('characters', [])
     
     if not characters or (len(characters) == 1 and characters[0]['Name'] == "Protagonist" and not characters[0]['Motivation']):
         st.warning("⚠️ No characters found. Please go to **Step 3: Character Dossiers** to add your cast first.")
     else:
         # Initialize synopses dictionary if not present
-        if 'character_synopses' not in st.session_state.novel_data:
-            st.session_state.novel_data['character_synopses'] = {}
+        if 'character_synopses' not in novel_data:
+            novel_data['character_synopses'] = {}
 
         for char in characters:
             name = char.get('Name', 'Unnamed Character')
@@ -254,7 +304,7 @@ elif step == "5. Character Synopses":
                     st.write(f"**Conflict:** {char.get('Conflict', 'N/A')}")
                 
                 with col2:
-                    current_synopsis = st.session_state.novel_data['character_synopses'].get(name, "")
+                    current_synopsis = novel_data['character_synopses'].get(name, "")
                     new_synopsis = st.text_area(
                         f"Synopsis for {name}",
                         value=current_synopsis,
@@ -262,7 +312,7 @@ elif step == "5. Character Synopses":
                         key=f"synopsis_{name}",
                         label_visibility="collapsed"
                     )
-                    st.session_state.novel_data['character_synopses'][name] = new_synopsis
+                    novel_data['character_synopses'][name] = new_synopsis
 
 # Step 6: The Four-Page Summary
 elif step == "6. The Four-Page Summary":
@@ -273,11 +323,11 @@ elif step == "6. The Four-Page Summary":
     """)
 
     # Initialize step 6 data if not present
-    if 'step6_pages' not in st.session_state.novel_data:
-        st.session_state.novel_data['step6_pages'] = ["", "", "", "", ""]
+    if 'step6_pages' not in novel_data:
+        novel_data['step6_pages'] = ["", "", "", "", ""]
 
     # Get Step 4 paragraphs to use as prompts
-    step4_paras = st.session_state.novel_data.get('step4_paragraphs', ["", "", "", "", ""])
+    step4_paras = novel_data.get('step4_paragraphs', ["", "", "", "", ""])
     
     labels = ["1. Detailed Setup", "2. Disaster 1 Expansion", "3. Disaster 2 Expansion", "4. Disaster 3 Expansion", "5. Resolution Expansion"]
     
@@ -289,14 +339,14 @@ elif step == "6. The Four-Page Summary":
             
         page_text = st.text_area(
             f"Expansion for {labels[i]}",
-            value=st.session_state.novel_data['step6_pages'][i],
+            value=novel_data['step6_pages'][i],
             height=400,
             key=f"page_{i}",
             label_visibility="collapsed"
         )
         updated_pages.append(page_text)
 
-    st.session_state.novel_data['step6_pages'] = updated_pages
+    novel_data['step6_pages'] = updated_pages
 
 # Step 7: Character Charts
 elif step == "7. Character Charts":
@@ -306,22 +356,22 @@ elif step == "7. Character Charts":
     how they will change by the end of the story.
     """)
 
-    characters = st.session_state.novel_data.get('characters', [])
+    characters = novel_data.get('characters', [])
     
     if not characters or (len(characters) == 1 and characters[0]['Name'] == "Protagonist" and not characters[0]['Motivation']):
         st.warning("⚠️ No characters found. Please go to **Step 3: Character Dossiers** to add your cast first.")
     else:
         # Initialize charts dictionary if not present
-        if 'character_charts' not in st.session_state.novel_data:
-            st.session_state.novel_data['character_charts'] = {}
+        if 'character_charts' not in novel_data:
+            novel_data['character_charts'] = {}
 
         for char in characters:
             name = char.get('Name', 'Unnamed Character')
             if not name: continue
             
             # Ensure an entry exists for this character
-            if name not in st.session_state.novel_data['character_charts']:
-                st.session_state.novel_data['character_charts'][name] = {
+            if name not in novel_data['character_charts']:
+                novel_data['character_charts'][name] = {
                     "Age/Birth": "", "Appearance": "", "Backstory": "", "Personality": "", "Arc": ""
                 }
             
@@ -334,7 +384,7 @@ elif step == "7. Character Charts":
                     cols[1].write(f"**Conflict:** {char.get('Conflict', 'N/A')}")
                     cols[2].write(f"**Epiphany:** {char.get('Epiphany', 'N/A')}")
 
-                chart_data = st.session_state.novel_data['character_charts'][name]
+                chart_data = novel_data['character_charts'][name]
                 
                 c1, c2 = st.columns(2)
                 chart_data["Age/Birth"] = c1.text_input("Age / Birth Date", value=chart_data.get("Age/Birth", ""), key=f"age_{name}")
@@ -354,19 +404,18 @@ elif step == "8. The Scene List":
 
     # Get labels and Step 6 content for context
     sections = ["Setup", "Disaster 1", "Disaster 2", "Disaster 3", "Resolution"]
-    step6_pages = st.session_state.novel_data.get('step6_pages', [""] * 5)
+    step6_pages = novel_data.get('step6_pages', [""] * 5)
     
     # Get character names for POV selection
-    char_names = [c['Name'] for c in st.session_state.novel_data.get('characters', []) if c.get('Name')]
+    char_names = [c['Name'] for c in novel_data.get('characters', []) if c.get('Name')]
     if not char_names:
         char_names = ["Protagonist"]
 
     # Migration & Initialization
-    if 'scene_list' not in st.session_state.novel_data:
-        st.session_state.novel_data['scene_list'] = []
+    if 'scene_list' not in novel_data:
+        novel_data['scene_list'] = []
     
-    import uuid
-    for scene in st.session_state.novel_data['scene_list']:
+    for scene in novel_data['scene_list']:
         if 'Section' not in scene:
             scene['Section'] = "Setup"
         if 'id' not in scene:
@@ -374,8 +423,8 @@ elif step == "8. The Scene List":
             scene['id'] = str(uuid.uuid4())
 
     # Initialize scene list if empty
-    if not st.session_state.novel_data['scene_list']:
-        st.session_state.novel_data['scene_list'] = [
+    if not novel_data['scene_list']:
+        novel_data['scene_list'] = [
             {"id": str(uuid.uuid4()), "POV Character": char_names[0], "Description": "Opening scene...", "Location": "TBD", "Section": "Setup"}
         ]
 
@@ -387,11 +436,11 @@ elif step == "8. The Scene List":
             st.info(step6_pages[i] if step6_pages[i] else "*(No content from Step 6)*")
             
             # Get scenes for this section in their current list order
-            section_scenes = [s for s in st.session_state.novel_data['scene_list'] if s.get('Section') == section_label]
+            section_scenes = [s for s in novel_data['scene_list'] if s.get('Section') == section_label]
             
             for j, scene in enumerate(section_scenes):
                 # Find current global index
-                global_idx = st.session_state.novel_data['scene_list'].index(scene)
+                global_idx = novel_data['scene_list'].index(scene)
                 
                 with st.container(border=True):
                     c1, c2, c3 = st.columns([2, 2, 1.5])
@@ -414,15 +463,15 @@ elif step == "8. The Scene List":
                         col_up, col_down, col_move, col_del = st.columns([1, 1, 2, 1])
                         with col_up:
                             if st.button("⬆️", key=f"up_{scene['id']}") and global_idx > 0:
-                                st.session_state.novel_data['scene_list'].insert(global_idx - 1, st.session_state.novel_data['scene_list'].pop(global_idx))
+                                novel_data['scene_list'].insert(global_idx - 1, novel_data['scene_list'].pop(global_idx))
                                 st.rerun()
                         with col_down:
-                            if st.button("⬇️", key=f"down_{scene['id']}") and global_idx < len(st.session_state.novel_data['scene_list']) - 1:
-                                st.session_state.novel_data['scene_list'].insert(global_idx + 1, st.session_state.novel_data['scene_list'].pop(global_idx))
+                            if st.button("⬇️", key=f"down_{scene['id']}") and global_idx < len(novel_data['scene_list']) - 1:
+                                novel_data['scene_list'].insert(global_idx + 1, novel_data['scene_list'].pop(global_idx))
                                 st.rerun()
                         with col_del:
                             if st.button("🗑️", key=f"del_{scene['id']}"):
-                                st.session_state.novel_data['scene_list'].pop(global_idx)
+                                novel_data['scene_list'].pop(global_idx)
                                 st.rerun()
                         with col_move:
                             target_section = st.selectbox(
@@ -444,7 +493,7 @@ elif step == "8. The Scene List":
                     )
 
             if st.button(f"➕ Add Scene to {section_label}", key=f"add_to_{section_label}"):
-                st.session_state.novel_data['scene_list'].append(
+                novel_data['scene_list'].append(
                     {"id": str(uuid.uuid4()), "POV Character": char_names[0], "Description": "", "Location": "TBD", "Section": section_label}
                 )
                 st.rerun()
@@ -459,17 +508,16 @@ elif step == "9. The Narrative Outline":
     Scenes are organized by their narrative section for clarity.
     """)
 
-    all_scenes = st.session_state.novel_data.get('scene_list', [])
+    all_scenes = novel_data.get('scene_list', [])
     sections = ["Setup", "Disaster 1", "Disaster 2", "Disaster 3", "Resolution"]
     
     if not all_scenes or (len(all_scenes) == 1 and not all_scenes[0]['Description']):
          st.warning("⚠️ No scenes found. Please go to **Step 8: The Scene List** to define your scenes first.")
     else:
-        if 'scene_outlines' not in st.session_state.novel_data:
-            st.session_state.novel_data['scene_outlines'] = {}
+        if 'scene_outlines' not in novel_data:
+            novel_data['scene_outlines'] = {}
 
         # Sort scenes by section to match Step 8 visual flow
-        # This ensures Step 9 reflects the user's reordering
         scene_counter = 1
         for section in sections:
             section_scenes = [s for s in all_scenes if s.get('Section') == section]
@@ -481,18 +529,11 @@ elif step == "9. The Narrative Outline":
                     loc = scene.get('Location', 'TBD')
                     scene_id = scene.get('id')
                     
-                    # Backward compatibility for old keys if id is missing or just created
-                    old_scene_num = scene.get('Scene #', '?')
-                    old_key = f"scene_{old_scene_num}_{pov}_{desc[:20]}"
-                    
-                    if scene_id not in st.session_state.novel_data['scene_outlines'] and old_key in st.session_state.novel_data['scene_outlines']:
-                        st.session_state.novel_data['scene_outlines'][scene_id] = st.session_state.novel_data['scene_outlines'].pop(old_key)
-
                     with st.expander(f"🎬 Scene {scene_counter}: {desc[:50]}...", expanded=True):
                         st.caption(f"POV: {pov} | Location: {loc}")
                         st.write(f"**Brief:** {desc}")
                         
-                        current_outline = st.session_state.novel_data['scene_outlines'].get(scene_id, "")
+                        current_outline = novel_data['scene_outlines'].get(scene_id, "")
                         new_outline = st.text_area(
                             f"Detailed Outline for Scene {scene_counter}",
                             value=current_outline,
@@ -500,7 +541,7 @@ elif step == "9. The Narrative Outline":
                             key=f"outline_{scene_id}",
                             label_visibility="collapsed"
                         )
-                        st.session_state.novel_data['scene_outlines'][scene_id] = new_outline
+                        novel_data['scene_outlines'][scene_id] = new_outline
                         scene_counter += 1
 
 # Step 10: The First Draft
@@ -511,7 +552,7 @@ elif step == "10. The First Draft":
     Your planning from previous steps is available as a reference.
     """)
 
-    all_scenes = st.session_state.novel_data.get('scene_list', [])
+    all_scenes = novel_data.get('scene_list', [])
     sections = ["Setup", "Disaster 1", "Disaster 2", "Disaster 3", "Resolution"]
     
     # Create sorted list for selection
@@ -522,8 +563,8 @@ elif step == "10. The First Draft":
     if not sorted_scenes or (len(sorted_scenes) == 1 and not sorted_scenes[0]['Description']):
         st.warning("⚠️ No scenes found. Please complete the previous steps first.")
     else:
-        if 'scene_content' not in st.session_state.novel_data:
-            st.session_state.novel_data['scene_content'] = {}
+        if 'scene_content' not in novel_data:
+            novel_data['scene_content'] = {}
 
         # Scene selection
         scene_options = [f"Scene {i+1} ({s.get('Section')}): {s['Description'][:30]}..." for i, s in enumerate(sorted_scenes)]
@@ -542,11 +583,11 @@ elif step == "10. The First Draft":
             st.write(f"**Brief:** {desc}")
             
             with st.expander("📝 Scene Outline (Step 9)", expanded=True):
-                outline = st.session_state.novel_data.get('scene_outlines', {}).get(scene_id, "*(No outline found)*")
+                outline = novel_data.get('scene_outlines', {}).get(scene_id, "*(No outline found)*")
                 st.write(outline)
             
             with st.expander("👤 Character traits", expanded=False):
-                charts = st.session_state.novel_data.get('character_charts', {}).get(pov, {})
+                charts = novel_data.get('character_charts', {}).get(pov, {})
                 if charts:
                     st.write(f"**Appearance:** {charts.get('Appearance', 'N/A')}")
                     st.write(f"**Backstory:** {charts.get('Backstory', 'N/A')}")
@@ -557,13 +598,7 @@ elif step == "10. The First Draft":
         with col2:
             st.subheader(f"✍️ Writing: Scene {selected_scene_idx + 1}")
             
-            # Migration for Step 10 if needed
-            old_scene_num = selected_scene.get('Scene #', '?')
-            old_key = f"scene_{old_scene_num}_{pov}_{desc[:20]}"
-            if scene_id not in st.session_state.novel_data['scene_content'] and old_key in st.session_state.novel_data['scene_content']:
-                st.session_state.novel_data['scene_content'][scene_id] = st.session_state.novel_data['scene_content'].pop(old_key)
-
-            current_prose = st.session_state.novel_data['scene_content'].get(scene_id, "")
+            current_prose = novel_data['scene_content'].get(scene_id, "")
             new_prose = st.text_area(
                 "Write your prose here:",
                 value=current_prose,
@@ -571,7 +606,7 @@ elif step == "10. The First Draft":
                 key=f"prose_{scene_id}",
                 label_visibility="collapsed"
             )
-            st.session_state.novel_data['scene_content'][scene_id] = new_prose
+            novel_data['scene_content'][scene_id] = new_prose
             
             word_count = len(new_prose.split()) if new_prose else 0
             st.caption(f"Word count for this scene: {word_count}")
@@ -585,40 +620,44 @@ else:
 st.sidebar.divider()
 
 # Export
-import json
-json_data = json.dumps(st.session_state.novel_data, indent=2)
+# Now we export ALL novels in a bundle
+export_data = {
+    "version": "2.0",
+    "active_novel": st.session_state.current_novel,
+    "novels": st.session_state.novels
+}
+json_data = json.dumps(export_data, indent=2)
 st.sidebar.download_button(
-    label="💾 Download Draft (JSON)",
+    label="💾 Download All Novels (JSON)",
     data=json_data,
-    file_name="snowflake_draft.json",
+    file_name="snowflake_archive.json",
     mime="application/json"
 )
 
 # Import
-uploaded_file = st.sidebar.file_uploader("📂 Import Draft (JSON)", type="json")
+uploaded_file = st.sidebar.file_uploader("📂 Import Archive/Draft (JSON)", type="json")
 if uploaded_file is not None:
     try:
         imported_data = json.load(uploaded_file)
-        # Basic validation: check for core required keys
-        required_keys = ['step1_hook', 'step2_summary', 'characters']
-        if all(key in imported_data for key in required_keys):
-            # Merge with default state to ensure all keys exist
-            new_data = {
-                'step1_hook': "",
-                'step2_summary': "",
-                'characters': [],
-                'step4_paragraphs': ["", "", "", "", ""],
-                'character_synopses': {},
-                'step6_pages': ["", "", "", "", ""],
-                'character_charts': {},
-                'scene_list': [],
-                'scene_outlines': {},
-                'scene_content': {},
-            }
+        
+        # Check if it's a new multi-novel archive (v2.0)
+        if isinstance(imported_data, dict) and imported_data.get("version") == "2.0":
+            st.session_state.novels = imported_data["novels"]
+            st.session_state.current_novel = imported_data["active_novel"]
+            st.sidebar.success("✅ Archive imported successfully!")
+            st.rerun()
+            
+        # Or if it's an old single-novel draft
+        elif isinstance(imported_data, dict) and 'step1_hook' in imported_data:
+            # Add it as a new novel
+            import_name = f"Imported_{uuid.uuid4().hex[:4]}"
+            new_data = create_empty_novel()
             new_data.update(imported_data)
-            st.session_state.novel_data = new_data
-            st.sidebar.success("✅ Data imported successfully!")
+            st.session_state.novels[import_name] = new_data
+            st.session_state.current_novel = import_name
+            st.sidebar.success(f"✅ Draft imported as '{import_name}'")
+            st.rerun()
         else:
-            st.sidebar.error("❌ Invalid JSON format. Missing required fields.")
+            st.sidebar.error("❌ Invalid JSON format.")
     except Exception as e:
         st.sidebar.error(f"❌ Error loading JSON: {e}")
