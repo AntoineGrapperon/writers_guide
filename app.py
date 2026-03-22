@@ -104,7 +104,8 @@ if step == "🏠 Home":
     1.  **Iterative Growth:** Each step builds upon the work you did in the previous one. 
     2.  **Character & Plot:** You'll alternate between developing your story's plot and deepening your characters.
     3.  **Flexibility:** Don't be afraid to go back to earlier steps! If you discover something new about a character in Step 5, update Step 1 to match.
-    4.  **Save Your Progress:** Use the **Download Draft** button in the sidebar to save your work locally. You can resume later by using the **Import Draft** button.
+    4.  **Automatic Persistence:** Your work is automatically saved to a local database (`snowflake.db`) on your machine as you type. 
+    5.  **Backups & Archives:** Use the **Download All Novels** button in the sidebar to export your entire archive for safekeeping.
 
     ### 🚀 Getting Started:
     Select **"1. The One-Sentence Hook"** from the sidebar to begin your journey!
