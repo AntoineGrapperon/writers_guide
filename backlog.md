@@ -39,5 +39,10 @@
     - State: Refactor `st.session_state` to store multiple novels in a dictionary.
     - Export/Import: Support exporting all novels as an archive and importing old single-novel drafts as new projects.
 
+- [x] **PBI-S.17: Local-First Persistence (SQLite)**
+    - Implementation: Replace manual session state initialization with `snowflake.db` using SQLite.
+    - UX: Auto-save all changes to the current novel on every rerun.
+    - Safety: Ensure imported JSON files are immediately persisted to the database.
+
 ---
 *Note: This backlog is for the Streamlit implementation branch.*

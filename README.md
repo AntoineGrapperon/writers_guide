@@ -47,7 +47,8 @@ The application will typically open automatically in your default browser at `ht
 - **10-Step Workflow:** Guided progression from a single sentence to a full first draft.
 - **Character Dossiers:** Interactive card-based management of your cast's motivations, goals, and arcs.
 - **Dynamic Scene List:** Organize and outline your novel's narrative flow.
-- **Export/Import:** Save your progress as a JSON file and resume writing at any time.
+- **Local Persistence:** Automatic saving and loading of all your novels using a local SQLite database (`snowflake.db`). 
+- **Export/Import:** Download your entire novel archive as a JSON file or import existing drafts to the local database.
 
 ## 📄 License
 

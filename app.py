@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import json
 import uuid
+import db
 
 # Helper to create a new novel structure
 def create_empty_novel():
@@ -18,13 +19,15 @@ def create_empty_novel():
         'scene_content': {},
     }
 
-# PBI-S.1: Session State Initialization
+# PBI-S.1: Database-backed Session State Initialization
 if 'novels' not in st.session_state:
-    # Migration or fresh start
-    if 'novel_data' in st.session_state:
-        st.session_state.novels = {"My First Novel": st.session_state.novel_data}
-    else:
+    db.init_db()
+    st.session_state.novels = db.load_all_novels()
+    
+    # Ensure at least one novel exists
+    if not st.session_state.novels:
         st.session_state.novels = {"My First Novel": create_empty_novel()}
+        db.save_novel("My First Novel", st.session_state.novels["My First Novel"])
 
 if 'current_novel' not in st.session_state:
     st.session_state.current_novel = list(st.session_state.novels.keys())[0]
@@ -54,6 +57,7 @@ with st.sidebar.expander("➕ New Novel"):
     if st.button("Create"):
         if new_novel_name and new_novel_name not in st.session_state.novels:
             st.session_state.novels[new_novel_name] = create_empty_novel()
+            db.save_novel(new_novel_name, st.session_state.novels[new_novel_name])
             st.session_state.current_novel = new_novel_name
             st.rerun()
         elif new_novel_name:
@@ -62,7 +66,9 @@ with st.sidebar.expander("➕ New Novel"):
 # Delete Novel
 if len(st.session_state.novels) > 1:
     if st.sidebar.button("🗑️ Delete Current Novel"):
-        del st.session_state.novels[st.session_state.current_novel]
+        old_name = st.session_state.current_novel
+        del st.session_state.novels[old_name]
+        db.delete_novel(old_name)
         st.session_state.current_novel = list(st.session_state.novels.keys())[0]
         st.rerun()
 
@@ -644,7 +650,10 @@ if uploaded_file is not None:
         if isinstance(imported_data, dict) and imported_data.get("version") == "2.0":
             st.session_state.novels = imported_data["novels"]
             st.session_state.current_novel = imported_data["active_novel"]
-            st.sidebar.success("✅ Archive imported successfully!")
+            # Save all imported novels to DB
+            for name, data in st.session_state.novels.items():
+                db.save_novel(name, data)
+            st.sidebar.success("✅ Archive imported and saved to DB!")
             st.rerun()
             
         # Or if it's an old single-novel draft
@@ -654,10 +663,17 @@ if uploaded_file is not None:
             new_data = create_empty_novel()
             new_data.update(imported_data)
             st.session_state.novels[import_name] = new_data
+            db.save_novel(import_name, new_data) # Persist to DB
             st.session_state.current_novel = import_name
-            st.sidebar.success(f"✅ Draft imported as '{import_name}'")
+            st.sidebar.success(f"✅ Draft imported as '{import_name}' and saved to DB")
             st.rerun()
         else:
             st.sidebar.error("❌ Invalid JSON format.")
     except Exception as e:
         st.sidebar.error(f"❌ Error loading JSON: {e}")
+
+# --- Auto-save current state to DB ---
+if 'current_novel' in st.session_state and 'novels' in st.session_state:
+    current_name = st.session_state.current_novel
+    if current_name in st.session_state.novels:
+        db.save_novel(current_name, st.session_state.novels[current_name])
