@@ -1,0 +1,28 @@
+{
+  "sidebar": {
+    "title": "❄️ Architecte Flocon",
+    "nav_header": "📖 Mes Romans",
+    "active_novel": "Roman Actif :",
+    "new_novel": "➕ Nouveau Roman",
+    "novel_title": "Titre du Roman",
+    "create": "Créer",
+    "delete": "🗑️ Supprimer le Roman Actuel",
+    "steps": [
+        "🏠 Accueil",
+        "1. L'Accroche en une phrase",
+        "2. Le Résumé en un paragraphe",
+        "3. Dossiers des Personnages",
+        "4. Le Résumé en une page",
+        "5. Synopsis des Personnages",
+        "6. Le Résumé en quatre pages",
+        "7. Fiches des Personnages",
+        "8. La Liste des Scènes",
+        "9. Le Plan Narratif",
+        "10. Le Premier Jet"
+    ]
+  },
+  "home": {
+    "welcome": "🏠 Bienvenue dans : {novel_name}",
+    "intro": "Écrire un roman est difficile. La **Méthode Flocon**, créée par Randy Ingermanson, la rend gérable en commençant par un petit \"flocon\" d'idée et en l'élargissant pour en faire une histoire complète."
+  }
+}

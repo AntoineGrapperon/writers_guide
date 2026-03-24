@@ -1,0 +1,28 @@
+{
+  "sidebar": {
+    "title": "❄️ Snowflake Architect",
+    "nav_header": "📖 My Novels",
+    "active_novel": "Active Novel:",
+    "new_novel": "➕ New Novel",
+    "novel_title": "Novel Title",
+    "create": "Create",
+    "delete": "🗑️ Delete Current Novel",
+    "steps": [
+        "🏠 Home",
+        "1. The One-Sentence Hook",
+        "2. The One-Paragraph Summary",
+        "3. Character Dossiers",
+        "4. The One-Page Summary",
+        "5. Character Synopses",
+        "6. The Four-Page Summary",
+        "7. Character Charts",
+        "8. The Scene List",
+        "9. The Narrative Outline",
+        "10. The First Draft"
+    ]
+  },
+  "home": {
+    "welcome": "🏠 Welcome to: {novel_name}",
+    "intro": "Writing a novel is hard. The **Snowflake Method**, created by Randy Ingermanson, makes it manageable by starting with a small \"snowflake\" of an idea and expanding it into a complete story."
+  }
+}
