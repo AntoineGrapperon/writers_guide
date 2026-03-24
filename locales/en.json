@@ -24,5 +24,131 @@
   "home": {
     "welcome": "🏠 Welcome to: {novel_name}",
     "intro": "Writing a novel is hard. The **Snowflake Method**, created by Randy Ingermanson, makes it manageable by starting with a small \"snowflake\" of an idea and expanding it into a complete story."
+  },
+  "step1": {
+    "header": "Step 1: The One-Sentence Hook",
+    "info": "Write a single sentence that summarizes your novel. Aim for less than 15 words and avoid character names.",
+    "label": "Enter your hook:",
+    "placeholder": "e.g., A scientist discovers a way to communicate with trees, but they only want to complain.",
+    "word_count": "**Word Count:** {count} / 15",
+    "warning": "⚠️ Your hook is a bit long! Try to keep it under 15 words for maximum impact.",
+    "success": "✅ Great! This is a concise and powerful hook."
+  },
+  "step2": {
+    "header": "Step 2: The One-Paragraph Summary",
+    "markdown": "Expand your one-sentence hook into a full paragraph consisting of **five sentences**:\n1.  **Setup:** Introduction of the story and characters.\n2.  **Disaster 1:** The first major conflict or setback.\n3.  **Disaster 2:** The conflict escalates.\n4.  **Disaster 3:** The climax or turning point.\n5.  **Ending:** The resolution.",
+    "expander_label": "ℹ️ Why this structure?",
+    "expander_info": "This 'Three Disasters + Ending' structure ensures your story has rising tension and a clear arc from the very beginning.",
+    "label": "Draft your summary:",
+    "placeholder": "Sentence 1 (Setup)... Sentence 2 (Disaster 1)... Sentence 3 (Disaster 2)... Sentence 4 (Disaster 3)... Sentence 5 (Ending)...",
+    "sentence_count": "**Sentence Count:** {count} / 5",
+    "success": "✅ Perfect structure! You have exactly 5 sentences.",
+    "warning": "⚠️ You have more than 5 sentences. Try to combine ideas to keep it punchy.",
+    "info": "You have {count} sentences. Keep going until you hit 5!"
+  },
+  "step3": {
+    "header": "Step 3: Character Dossiers",
+    "markdown": "Every story is driven by its characters. For each of your major characters, define the following:\n*   **Motivation:** What do they want abstractly?\n*   **Goal:** What is their concrete objective?\n*   **Conflict:** What prevents them from reaching that goal?\n*   **Epiphany:** What do they learn or how do they change?",
+    "char_name_placeholder": "Character Name",
+    "delete_help": "Delete this character",
+    "motivation_label": "Motivation (Abstract Want)",
+    "goal_label": "Goal (Concrete Objective)",
+    "conflict_label": "Conflict (The Obstacle)",
+    "epiphany_label": "Epiphany (Lesson Learned)",
+    "add_character": "➕ Add Character",
+    "default_name": "Protagonist"
+  },
+  "step4": {
+    "header": "Step 4: The One-Page Summary",
+    "markdown": "Expand each of your five sentences from **Step 2** into a full paragraph. \n*   The first four paragraphs should end in a **disaster**.\n*   The final paragraph should tell the **resolution**.",
+    "prompt_fallback": "(No summary provided in Step 2)",
+    "labels": ["1. Setup", "2. Disaster 1", "3. Disaster 2", "4. Disaster 3", "5. Ending"],
+    "prompt_caption": "Prompt: {prompt}",
+    "para_label": "Paragraph {num}"
+  },
+  "step5": {
+    "header": "Step 5: Character Synopses",
+    "markdown": "Write a one-page synopsis for each of your major characters. \nThese synopses should tell the story **from that character's point of view**.",
+    "no_chars_warning": "⚠️ No characters found. Please go to **Step 3: Character Dossiers** to add your cast first.",
+    "expander_label": "📖 POV Synopsis: {name}",
+    "ref_header": "**Reference (Step 3):**",
+    "motivation": "**Motivation:** {val}",
+    "goal": "**Goal:** {val}",
+    "conflict": "**Conflict:** {val}",
+    "synopsis_label": "Synopsis for {name}"
+  },
+  "step6": {
+    "header": "Step 6: The Four-Page Summary",
+    "markdown": "Expand your one-page summary into a much more detailed narrative. \nIn the full Snowflake method, this would be about four pages of text.",
+    "labels": ["1. Detailed Setup", "2. Disaster 1 Expansion", "3. Disaster 2 Expansion", "4. Disaster 3 Expansion", "5. Resolution Expansion"],
+    "ref_expander": "📄 Reference: Step 4 Paragraph",
+    "empty_ref": "*(Empty)*",
+    "expansion_label": "Expansion for {label}"
+  },
+  "step7": {
+    "header": "Step 7: Character Charts",
+    "markdown": "Deepen your characters. Flesh out their physical traits, history, and most importantly, \nhow they will change by the end of the story.",
+    "expander_label": "👤 Character Chart: {name}",
+    "ref_caption": "Step 3/5 Reference",
+    "goal": "**Goal:** {val}",
+    "conflict": "**Conflict:** {val}",
+    "epiphany": "**Epiphany:** {val}",
+    "age_label": "Age / Birth Date",
+    "appearance_label": "Physical Appearance",
+    "backstory_label": "History / Backstory",
+    "personality_label": "Personality Traits",
+    "arc_label": "Character Arc (How they change)"
+  },
+  "step8": {
+    "header": "Step 8: The Scene List",
+    "markdown": "Break your four-page summary into a list of scenes. \nEach scene should have a clear POV character and a specific purpose.",
+    "sections": ["Setup", "Disaster 1", "Disaster 2", "Disaster 3", "Resolution"],
+    "default_pov": "Protagonist",
+    "section_expander": "📂 Section {num}: {label}",
+    "ref_caption": "Reference (Step 6 Expansion):",
+    "empty_ref": "*(No content from Step 6)*",
+    "pov_label": "POV Character",
+    "loc_label": "Location",
+    "move_label": "Move",
+    "desc_label": "What happens in this scene?",
+    "add_scene": "➕ Add Scene to {label}",
+    "tip": "💡 Pro-tip: Reorder scenes using the arrows to refine the narrative flow within and between sections."
+  },
+  "step9": {
+    "header": "Step 9: The Narrative Outline",
+    "markdown": "Expand each scene from your **Step 8 Scene List** into a detailed narrative outline. \nScenes are organized by their narrative section for clarity.",
+    "no_scenes_warning": "⚠️ No scenes found. Please go to **Step 8: The Scene List** to define your scenes first.",
+    "scene_expander": "🎬 Scene {num}: {desc}...",
+    "ref_caption": "POV: {pov} | Location: {loc}",
+    "brief_label": "**Brief:** {desc}",
+    "outline_label": "Detailed Outline for Scene {num}"
+  },
+  "step10": {
+    "header": "Step 10: The First Draft",
+    "markdown": "It's time to write! Select a scene from your outline and start drafting. \nYour planning from previous steps is available as a reference.",
+    "no_scenes_warning": "⚠️ No scenes found. Please complete the previous steps first.",
+    "select_label": "Select a scene to write:",
+    "option_label": "Scene {num} ({section}): {desc}...",
+    "ref_header": "📜 Reference",
+    "pov_label": "**POV:** {val}",
+    "brief_label": "**Brief:** {val}",
+    "outline_expander": "📝 Scene Outline (Step 9)",
+    "empty_outline": "*(No outline found)*",
+    "traits_expander": "👤 Character traits",
+    "no_traits": "No character chart found for this POV.",
+    "appearance": "**Appearance:** {val}",
+    "backstory": "**Backstory:** {val}",
+    "arc": "**Arc:** {val}",
+    "writing_header": "✍️ Writing: Scene {num}",
+    "prose_placeholder": "Write your prose here:",
+    "word_count": "Word count for this scene: {count}"
+  },
+  "export_import": {
+    "download_label": "💾 Download All Novels (JSON)",
+    "import_label": "📂 Import Archive/Draft (JSON)",
+    "import_success_archive": "✅ Archive imported and saved to DB!",
+    "import_success_draft": "✅ Draft imported as '{name}' and saved to DB",
+    "import_error_format": "❌ Invalid JSON format.",
+    "import_error_load": "❌ Error loading JSON: {error}"
   }
 }

@@ -24,5 +24,131 @@
   "home": {
     "welcome": "🏠 Bienvenue dans : {novel_name}",
     "intro": "Écrire un roman est difficile. La **Méthode Flocon**, créée par Randy Ingermanson, la rend gérable en commençant par un petit \"flocon\" d'idée et en l'élargissant pour en faire une histoire complète."
+  },
+  "step1": {
+    "header": "Étape 1 : L'Accroche en une phrase",
+    "info": "Écrivez une seule phrase qui résume votre roman. Visez moins de 15 mots et évitez les noms de personnages.",
+    "label": "Entrez votre accroche :",
+    "placeholder": "ex: Un scientifique découvre un moyen de communiquer avec les arbres, mais ils ne font que se plaindre.",
+    "word_count": "**Nombre de mots :** {count} / 15",
+    "warning": "⚠️ Votre accroche est un peu longue ! Essayez de rester sous les 15 mots pour un impact maximum.",
+    "success": "✅ Excellent ! C'est une accroche concise et puissante."
+  },
+  "step2": {
+    "header": "Étape 2 : Le Résumé en un paragraphe",
+    "markdown": "Développez votre accroche en un paragraphe complet de **cinq phrases** :\n1.  **Mise en place :** Introduction de l'histoire et des personnages.\n2.  **Désastre 1 :** Le premier conflit ou revers majeur.\n3.  **Désastre 2 :** Le conflit s'intensifie.\n4.  **Désastre 3 :** Le point culminant ou tournant.\n5.  **Fin :** La résolution.",
+    "expander_label": "ℹ️ Pourquoi cette structure ?",
+    "expander_info": "Cette structure 'Trois Désastres + Fin' garantit que votre histoire a une tension croissante et un arc clair dès le début.",
+    "label": "Rédigez votre résumé :",
+    "placeholder": "Phrase 1 (Mise en place)... Phrase 2 (Désastre 1)... Phrase 3 (Désastre 2)... Phrase 4 (Désastre 3)... Phrase 5 (Fin)...",
+    "sentence_count": "**Nombre de phrases :** {count} / 5",
+    "success": "✅ Structure parfaite ! Vous avez exactement 5 phrases.",
+    "warning": "⚠️ Vous avez plus de 5 phrases. Essayez de combiner les idées pour rester percutant.",
+    "info": "Vous avez {count} phrases. Continuez jusqu'à en avoir 5 !"
+  },
+  "step3": {
+    "header": "Étape 3 : Dossiers des Personnages",
+    "markdown": "Chaque histoire est portée par ses personnages. Pour chacun de vos personnages principaux, définissez ce qui suit :\n*   **Motivation :** Que veulent-ils de manière abstraite ?\n*   **Objectif :** Quel est leur objectif concret ?\n*   **Conflit :** Qu'est-ce qui les empêche d'atteindre cet objectif ?\n*   **Épiphanie :** Qu'apprennent-ils ou comment changent-ils ?",
+    "char_name_placeholder": "Nom du Personnage",
+    "delete_help": "Supprimer ce personnage",
+    "motivation_label": "Motivation (Désir Abstrait)",
+    "goal_label": "Objectif (But Concret)",
+    "conflict_label": "Conflit (L'Obstacle)",
+    "epiphany_label": "Épiphanie (Leçon Apprise)",
+    "add_character": "➕ Ajouter un Personnage",
+    "default_name": "Protagoniste"
+  },
+  "step4": {
+    "header": "Étape 4 : Le Résumé en une page",
+    "markdown": "Développez chacune de vos cinq phrases de l'**Étape 2** en un paragraphe complet.\n*   Les quatre premiers paragraphes doivent se terminer par un **désastre**.\n*   Le dernier paragraphe doit raconter la **résolution**.",
+    "prompt_fallback": "(Aucun résumé fourni à l'Étape 2)",
+    "labels": ["1. Mise en place", "2. Désastre 1", "3. Désastre 2", "4. Désastre 3", "5. Fin"],
+    "prompt_caption": "Amorce : {prompt}",
+    "para_label": "Paragraphe {num}"
+  },
+  "step5": {
+    "header": "Étape 5 : Synopsis des Personnages",
+    "markdown": "Rédigez un synopsis d'une page pour chacun de vos personnages principaux.\nCes synopsis doivent raconter l'histoire **du point de vue de ce personnage**.",
+    "no_chars_warning": "⚠️ Aucun personnage trouvé. Veuillez vous rendre à l'**Étape 3 : Dossiers des Personnages** pour ajouter votre distribution en premier.",
+    "expander_label": "📖 Synopsis POV : {name}",
+    "ref_header": "**Référence (Étape 3) :**",
+    "motivation": "**Motivation :** {val}",
+    "goal": "**Objectif :** {val}",
+    "conflict": "**Conflit :** {val}",
+    "synopsis_label": "Synopsis pour {name}"
+  },
+  "step6": {
+    "header": "Étape 6 : Le Résumé en quatre pages",
+    "markdown": "Développez votre résumé d'une page en un récit beaucoup plus détaillé.\nDans la méthode Flocon complète, cela représenterait environ quatre pages de texte.",
+    "labels": ["1. Mise en place détaillée", "2. Expansion du Désastre 1", "3. Expansion du Désastre 2", "4. Expansion du Désastre 3", "5. Expansion de la Résolution"],
+    "ref_expander": "📄 Référence : Paragraphe de l'Étape 4",
+    "empty_ref": "*(Vide)*",
+    "expansion_label": "Expansion pour {label}"
+  },
+  "step7": {
+    "header": "Étape 7 : Fiches des Personnages",
+    "markdown": "Approfondissez vos personnages. Détaillez leurs traits physiques, leur histoire et, plus important encore,\ncomment ils changeront à la fin de l'histoire.",
+    "expander_label": "👤 Fiche de Personnage : {name}",
+    "ref_caption": "Référence Étape 3/5",
+    "goal": "**Objectif :** {val}",
+    "conflict": "**Conflit :** {val}",
+    "epiphany": "**Épiphanie :** {val}",
+    "age_label": "Âge / Date de Naissance",
+    "appearance_label": "Apparence Physique",
+    "backstory_label": "Histoire / Antécédents",
+    "personality_label": "Traits de Personnalité",
+    "arc_label": "Arc du Personnage (Son évolution)"
+  },
+  "step8": {
+    "header": "Étape 8 : La Liste des Scènes",
+    "markdown": "Décomposez votre résumé de quatre pages en une liste de scènes.\nChaque scène doit avoir un personnage POV clair et un but spécifique.",
+    "sections": ["Mise en place", "Désastre 1", "Désastre 2", "Désastre 3", "Résolution"],
+    "default_pov": "Protagoniste",
+    "section_expander": "📂 Section {num} : {label}",
+    "ref_caption": "Référence (Expansion Étape 6) :",
+    "empty_ref": "*(Aucun contenu pour l'Étape 6)*",
+    "pov_label": "Personnage POV",
+    "loc_label": "Lieu",
+    "move_label": "Déplacer",
+    "desc_label": "Que se passe-t-il dans cette scène ?",
+    "add_scene": "➕ Ajouter une Scène à {label}",
+    "tip": "💡 Astuce : Réorganisez les scènes à l'aide des flèches pour affiner le flux narratif au sein des sections et entre elles."
+  },
+  "step9": {
+    "header": "Étape 9 : Le Plan Narratif",
+    "markdown": "Développez chaque scène de votre **Liste des Scènes de l'Étape 8** en un plan narratif détaillé.\nLes scènes sont organisées par section narrative pour plus de clarté.",
+    "no_scenes_warning": "⚠️ Aucune scène trouvée. Veuillez vous rendre à l'**Étape 8 : La Liste des Scènes** pour définir vos scènes en premier.",
+    "scene_expander": "🎬 Scène {num} : {desc}...",
+    "ref_caption": "POV : {pov} | Lieu : {loc}",
+    "brief_label": "**Résumé :** {desc}",
+    "outline_label": "Plan détaillé pour la Scène {num}"
+  },
+  "step10": {
+    "header": "Étape 10 : Le Premier Jet",
+    "markdown": "Il est temps d'écrire ! Sélectionnez une scène de votre plan et commencez la rédaction.\nVotre planification des étapes précédentes est disponible comme référence.",
+    "no_scenes_warning": "⚠️ Aucune scène trouvée. Veuillez d'abord terminer les étapes précédentes.",
+    "select_label": "Sélectionnez une scène à écrire :",
+    "option_label": "Scène {num} ({section}) : {desc}...",
+    "ref_header": "📜 Référence",
+    "pov_label": "**POV :** {val}",
+    "brief_label": "**Résumé :** {val}",
+    "outline_expander": "📝 Plan de la Scène (Étape 9)",
+    "empty_outline": "*(Aucun plan trouvé)*",
+    "traits_expander": "👤 Traits du personnage",
+    "no_traits": "Aucune fiche de personnage trouvée pour ce POV.",
+    "appearance": "**Apparence :** {val}",
+    "backstory": "**Histoire :** {val}",
+    "arc": "**Arc :** {val}",
+    "writing_header": "✍️ Rédaction : Scène {num}",
+    "prose_placeholder": "Écrivez votre texte ici :",
+    "word_count": "Nombre de mots pour cette scène : {count}"
+  },
+  "export_import": {
+    "download_label": "💾 Télécharger tous les Romans (JSON)",
+    "import_label": "📂 Importer une Archive/Brouillon (JSON)",
+    "import_success_archive": "✅ Archive importée et sauvegardée dans la BD !",
+    "import_success_draft": "✅ Brouillon importé sous le nom '{name}' et sauvegardé dans la BD",
+    "import_error_format": "❌ Format JSON invalide.",
+    "import_error_load": "❌ Erreur lors du chargement du JSON : {error}"
   }
 }
