@@ -23,7 +23,19 @@
   },
   "home": {
     "welcome": "🏠 Bienvenue dans : {novel_name}",
-    "intro": "Écrire un roman est difficile. La **Méthode Flocon**, créée par Randy Ingermanson, la rend gérable en commençant par un petit \"flocon\" d'idée et en l'élargissant pour en faire une histoire complète."
+    "intro": "Écrire un roman est difficile. La **Méthode Flocon**, créée par Randy Ingermanson, la rend gérable en commençant par un petit \"flocon\" d'idée et en l'élargissant pour en faire une histoire complète.",
+    "what_is_title": "### ❄️ Qu'est-ce que la Méthode Flocon ?",
+    "what_is_text": "Au lieu de commencer à la page un en espérant le meilleur (l'approche \"Pantser\"), la méthode Flocon est une stratégie de \"Planificateur\". Vous commencez par une seule phrase et la développez systématiquement pour en faire un manuscrit complet à travers dix étapes structurées.",
+    "how_to_title": "### 🛠️ Comment utiliser cet outil :",
+    "how_to_steps": [
+      "**Croissance itérative :** Chaque étape s'appuie sur le travail effectué à l'étape précédente.",
+      "**Personnage et Intrigue :** Vous alternerez entre le développement de l'intrigue de votre histoire et l'approfondissement de vos personnages.",
+      "**Flexibilité :** N'ayez pas peur de revenir aux étapes précédentes ! Si vous découvrez quelque chose de nouveau sur un personnage à l'étape 5, mettez à jour l'étape 1 en conséquence.",
+      "**Persistance automatique :** Votre travail est automatiquement sauvegardé dans une base de données locale (`snowflake.db`) sur votre machine au fur et à mesure que vous écrivez.",
+      "**Sauvegardes et Archives :** Utilisez le bouton **Télécharger tous les Romans** dans la barre latérale pour exporter toute votre archive par mesure de sécurité."
+    ],
+    "get_started_title": "### 🚀 Pour commencer :",
+    "get_started_text": "Sélectionnez **\"1. L'Accroche en une phrase\"** dans la barre latérale pour commencer votre voyage !"
   },
   "step1": {
     "header": "Étape 1 : L'Accroche en une phrase",

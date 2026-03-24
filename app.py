@@ -99,20 +99,16 @@ step = st.sidebar.radio(
 if step == step_options[0]: # Home
     st.header(_("home.welcome", novel_name=st.session_state.current_novel))
     st.markdown(_("home.intro"))
-    st.markdown("""
-    ### ❄️ What is the Snowflake Method?
-    Instead of starting from page one and hoping for the best (the "Pantser" approach), the Snowflake Method is a "Plotter" strategy. You begin with a single sentence and systematically grow it into a full-length manuscript through ten structured steps.
+    
+    st.markdown(_("home.what_is_title"))
+    st.markdown(_("home.what_is_text"))
 
-    ### 🛠️ How to use this tool:
-    1.  **Iterative Growth:** Each step builds upon the work you did in the previous one. 
-    2.  **Character & Plot:** You'll alternate between developing your story's plot and deepening your characters.
-    3.  **Flexibility:** Don't be afraid to go back to earlier steps! If you discover something new about a character in Step 5, update Step 1 to match.
-    4.  **Automatic Persistence:** Your work is automatically saved to a local database (`snowflake.db`) on your machine as you type. 
-    5.  **Backups & Archives:** Use the **Download All Novels** button in the sidebar to export your entire archive for safekeeping.
+    st.markdown(_("home.how_to_title"))
+    for s in _("home.how_to_steps"):
+        st.markdown(f"{_('home.how_to_steps').index(s) + 1}. {s}")
 
-    ### 🚀 Getting Started:
-    Select **"1. The One-Sentence Hook"** from the sidebar to begin your journey!
-    """)
+    st.markdown(_("home.get_started_title"))
+    st.markdown(_("home.get_started_text"))
 
 # Step 1: The One-Sentence Hook (PBI-S.2)
 elif step == step_options[1]:

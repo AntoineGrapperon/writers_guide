@@ -23,7 +23,19 @@
   },
   "home": {
     "welcome": "🏠 Welcome to: {novel_name}",
-    "intro": "Writing a novel is hard. The **Snowflake Method**, created by Randy Ingermanson, makes it manageable by starting with a small \"snowflake\" of an idea and expanding it into a complete story."
+    "intro": "Writing a novel is hard. The **Snowflake Method**, created by Randy Ingermanson, makes it manageable by starting with a small \"snowflake\" of an idea and expanding it into a complete story.",
+    "what_is_title": "### ❄️ What is the Snowflake Method?",
+    "what_is_text": "Instead of starting from page one and hoping for the best (the \"Pantser\" approach), the Snowflake Method is a \"Plotter\" strategy. You begin with a single sentence and systematically grow it into a full-length manuscript through ten structured steps.",
+    "how_to_title": "### 🛠️ How to use this tool:",
+    "how_to_steps": [
+      "**Iterative Growth:** Each step builds upon the work you did in the previous one.",
+      "**Character & Plot:** You'll alternate between developing your story's plot and deepening your characters.",
+      "**Flexibility:** Don't be afraid to go back to earlier steps! If you discover something new about a character in Step 5, update Step 1 to match.",
+      "**Automatic Persistence:** Your work is automatically saved to a local database (`snowflake.db`) on your machine as you type.",
+      "**Backups & Archives:** Use the **Download All Novels** button in the sidebar to export your entire archive for safekeeping."
+    ],
+    "get_started_title": "### 🚀 Getting Started:",
+    "get_started_text": "Select **\"1. The One-Sentence Hook\"** from the sidebar to begin your journey!"
   },
   "step1": {
     "header": "Step 1: The One-Sentence Hook",
