@@ -1,0 +1,166 @@
+{
+  "sidebar": {
+    "title": "❄️ Arquitecto Snowflake",
+    "nav_header": "📖 Mis Novelas",
+    "active_novel": "Novela Activa:",
+    "new_novel": "➕ Nueva Novela",
+    "novel_title": "Título de la Novela",
+    "create": "Crear",
+    "delete": "🗑️ Eliminar Novela Actual",
+    "steps": [
+        "🏠 Inicio",
+        "1. El Gancho de una Oración",
+        "2. El Resumen de un Párrafo",
+        "3. Expedientes de Personajes",
+        "4. El Resumen de una Página",
+        "5. Sinopsis de Personajes",
+        "6. El Resumen de Cuatro Páginas",
+        "7. Fichas de Personajes",
+        "8. La Lista de Escenas",
+        "9. El Esquema Narrativo",
+        "10. El Primer Borrador"
+    ]
+  },
+  "home": {
+    "welcome": "🏠 Bienvenido a: {novel_name}",
+    "intro": "Escribir una novela es difícil. El **Método Snowflake**, creado por Randy Ingermanson, lo hace manejable comenzando con un pequeño \"copo de nieve\" de una idea y expandiéndolo en una historia completa.",
+    "what_is_title": "### ❄️ ¿Qué es el Método Snowflake?",
+    "what_is_text": "En lugar de comenzar desde la página uno y esperar lo mejor (el enfoque \"Pantser\"), el Método Snowflake es una estrategia de \"Planificador\" (Plotter). Comienzas con una sola oración y la haces crecer sistemáticamente hasta convertirla en un manuscrito completo a través de diez pasos estructurados.",
+    "how_to_title": "### 🛠️ Cómo usar esta herramienta:",
+    "how_to_steps": [
+      "**Crecimiento Iterativo:** Cada paso se basa en el trabajo que hiciste en el anterior.",
+      "**Personaje y Trama:** Alternarás entre desarrollar la trama de tu historia y profundizar en tus personajes.",
+      "**Flexibilidad:** ¡No tengas miedo de volver a pasos anteriores! Si descubres algo nuevo sobre un personaje en el Paso 5, actualiza el Paso 1 para que coincida.",
+      "**Persistencia Automática:** Tu trabajo se guarda automáticamente en una base de datos local (`snowflake.db`) en tu máquina mientras escribes.",
+      "**Copias de Seguridad y Archivos:** Usa el botón **Descargar Todas las Novelas** en la barra lateral para exportar todo tu archivo y guardarlo de forma segura."
+    ],
+    "get_started_title": "### 🚀 Primeros Pasos:",
+    "get_started_text": "¡Selecciona **\"1. El Gancho de una Sola Oración\"** en la barra lateral para comenzar tu viaje!"
+  },
+  "step1": {
+    "header": "Paso 1: El Gancho de una Sola Oración",
+    "info": "Escribe una sola oración que resuma tu novela. Intenta que tenga menos de 15 palabras y evita los nombres de los personajes.",
+    "label": "Ingresa tu gancho:",
+    "placeholder": "ej. Un científico descubre una forma de comunicarse con los árboles, pero ellos solo quieren quejarse.",
+    "word_count": "**Recuento de palabras:** {count} / 15",
+    "warning": "⚠️ ¡Tu gancho es un poco largo! Intenta mantenerlo por debajo de 15 palabras para un máximo impacto.",
+    "success": "✅ ¡Genial! Este es un gancho conciso y poderoso."
+  },
+  "step2": {
+    "header": "Paso 2: El Resumen de un Párrafo",
+    "markdown": "Expande tu gancho de una sola oración en un párrafo completo que conste de **cinco oraciones**:\n1.  **Configuración:** Introducción de la historia y los personajes.\n2.  **Desastre 1:** El primer gran conflicto o revés.\n3.  **Desastre 2:** El conflicto se intensifica.\n4.  **Desastre 3:** El clímax o punto de inflexión.\n5.  **Final:** La resolución.",
+    "expander_label": "ℹ️ ¿Por qué esta estructura?",
+    "expander_info": "Esta estructura de 'Tres Desastres + Final' asegura que tu historia tenga una tensión creciente y un arco claro desde el principio.",
+    "label": "Redacta tu resumen:",
+    "placeholder": "Oración 1 (Configuración)... Oración 2 (Desastre 1)... Oración 3 (Desastre 2)... Oración 4 (Desastre 3)... Oración 5 (Final)...",
+    "sentence_count": "**Recuento de oraciones:** {count} / 5",
+    "success": "✅ ¡Estructura perfecta! Tienes exactamente 5 oraciones.",
+    "warning": "⚠️ Tienes más de 5 oraciones. Intenta combinar ideas para mantenerlo impactante.",
+    "info": "Tienes {count} oraciones. ¡Sigue adelante hasta llegar a 5!"
+  },
+  "step3": {
+    "header": "Paso 3: Expedientes de Personajes",
+    "markdown": "Cada historia es impulsada por sus personajes. Para cada uno de tus personajes principales, define lo siguiente:\n*   **Motivación:** ¿Qué quieren de forma abstracta?\n*   **Meta:** ¿Cuál es su objetivo concreto?\n*   **Conflicto:** ¿Qué les impide alcanzar esa meta?\n*   **Epifanía:** ¿Qué aprenden o cómo cambian?",
+    "char_name_placeholder": "Nombre del Personaje",
+    "delete_help": "Eliminar este personaje",
+    "motivation_label": "Motivación (Deseo Abstracto)",
+    "goal_label": "Meta (Objetivo Concreto)",
+    "conflict_label": "Conflicto (El Obstáculo)",
+    "epiphany_label": "Epifanía (Lección Aprendida)",
+    "add_character": "➕ Añadir Personaje",
+    "default_name": "Protagonista"
+  },
+  "step4": {
+    "header": "Paso 4: El Resumen de una Página",
+    "markdown": "Expande cada una de tus cinco oraciones del **Paso 2** en un párrafo completo. \n*   Los primeros cuatro párrafos deben terminar en un **desastre**.\n*   El párrafo final debe contar la **resolución**.",
+    "prompt_fallback": "(No se proporcionó resumen en el Paso 2)",
+    "labels": ["1. Configuración", "2. Desastre 1", "3. Desastre 2", "4. Desastre 3", "5. Final"],
+    "prompt_caption": "Indicación: {prompt}",
+    "para_label": "Párrafo {num}"
+  },
+  "step5": {
+    "header": "Paso 5: Sinopsis de Personajes",
+    "markdown": "Escribe una sinopsis de una página para cada uno de tus personajes principales. \nEstas sinopsis deben contar la historia **desde el punto de vista de ese personaje**.",
+    "no_chars_warning": "⚠️ No se encontraron personajes. Por favor, ve al **Paso 3: Expedientes de Personajes** para añadir tu elenco primero.",
+    "expander_label": "📖 Sinopsis de POV: {name}",
+    "ref_header": "**Referencia (Paso 3):**",
+    "motivation": "**Motivación:** {val}",
+    "goal": "**Meta:** {val}",
+    "conflict": "**Conflicto:** {val}",
+    "synopsis_label": "Sinopsis para {name}"
+  },
+  "step6": {
+    "header": "Paso 6: El Resumen de Cuatro Páginas",
+    "markdown": "Expande tu resumen de una página en una narrativa mucho más detallada. \nEn el método Snowflake completo, esto sería unas cuatro páginas de texto.",
+    "labels": ["1. Configuración Detallada", "2. Expansión del Desastre 1", "3. Expansión del Desastre 2", "4. Expansión del Desastre 3", "5. Expansión de la Resolución"],
+    "ref_expander": "📄 Referencia: Párrafo del Paso 4",
+    "empty_ref": "*(Vacío)*",
+    "expansion_label": "Expansión para {label}"
+  },
+  "step7": {
+    "header": "Paso 7: Fichas de Personajes",
+    "markdown": "Profundiza en tus personajes. Define sus rasgos físicos, su historia y, lo más importante, \ncómo cambiarán al final de la historia.",
+    "expander_label": "👤 Ficha de Personaje: {name}",
+    "ref_caption": "Referencia Pasos 3/5",
+    "goal": "**Meta:** {val}",
+    "conflict": "**Conflicto:** {val}",
+    "epiphany": "**Epifanía:** {val}",
+    "age_label": "Edad / Fecha de Nacimiento",
+    "appearance_label": "Apariencia Física",
+    "backstory_label": "Historia / Antecedentes",
+    "personality_label": "Rasgos de Personalidad",
+    "arc_label": "Arco del Personaje (Cómo cambia)"
+  },
+  "step8": {
+    "header": "Paso 8: La Lista de Escenas",
+    "markdown": "Divide tu resumen de cuatro páginas en una lista de escenas. \nCada escena debe tener un personaje con un punto de vista (POV) claro y un propósito específico.",
+    "sections": ["Configuración", "Desastre 1", "Desastre 2", "Desastre 3", "Resolución"],
+    "default_pov": "Protagonista",
+    "section_expander": "📂 Sección {num}: {label}",
+    "ref_caption": "Referencia (Expansión del Paso 6):",
+    "empty_ref": "*(Sin contenido del Paso 6)*",
+    "pov_label": "Personaje POV",
+    "loc_label": "Ubicación",
+    "move_label": "Mover",
+    "desc_label": "¿Qué sucede en esta escena?",
+    "add_scene": "➕ Añadir Escena a {label}",
+    "tip": "💡 Consejo profesional: Reordena las escenas usando las flechas para refinar el flujo narrativo dentro y entre las secciones."
+  },
+  "step9": {
+    "header": "Paso 9: El Esquema Narrativo",
+    "markdown": "Expande cada escena de tu **Lista de Escenas del Paso 8** en un esquema narrativo detallado. \nLas escenas están organizadas por su sección narrativa para mayor claridad.",
+    "no_scenes_warning": "⚠️ No se encontraron escenas. Por favor, ve al **Paso 8: La Lista de Escenas** para definir tus escenas primero.",
+    "scene_expander": "🎬 Escena {num}: {desc}...",
+    "ref_caption": "POV: {pov} | Ubicación: {loc}",
+    "brief_label": "**Resumen:** {desc}",
+    "outline_label": "Esquema Detallado para la Escena {num}"
+  },
+  "step10": {
+    "header": "Paso 10: El Primer Borrador",
+    "markdown": "¡Es hora de escribir! Selecciona una escena de tu esquema y comienza a redactar. \nTu planificación de los pasos anteriores está disponible como referencia.",
+    "no_scenes_warning": "⚠️ No se encontraron escenas. Por favor, completa los pasos anteriores primero.",
+    "select_label": "Selecciona una escena para escribir:",
+    "option_label": "Escena {num} ({section}): {desc}...",
+    "ref_header": "📜 Referencia",
+    "pov_label": "**POV:** {val}",
+    "brief_label": "**Resumen:** {val}",
+    "outline_expander": "📝 Esquema de la Escena (Paso 9)",
+    "empty_outline": "*(No se encontró esquema)*",
+    "traits_expander": "👤 Rasgos del personaje",
+    "no_traits": "No se encontró ficha de personaje para este POV.",
+    "appearance": "**Apariencia:** {val}",
+    "backstory": "**Historia:** {val}",
+    "arc": "**Arco:** {val}",
+    "writing_header": "✍️ Escribiendo: Escena {num}",
+    "prose_placeholder": "Escribe tu prosa aquí:",
+    "word_count": "Recuento de palabras para esta escena: {count}"
+  },
+  "export_import": {
+    "download_label": "💾 Descargar Todas las Novelas (JSON)",
+    "import_label": "📂 Importar Archivo/Borrador (JSON)",
+    "import_success_archive": "✅ ¡Archivo importado y guardado en la base de datos!",
+    "import_success_draft": "✅ Borrador importado como '{name}' y guardado en la base de datos",
+    "import_error_format": "❌ Formato JSON inválido.",
+    "import_error_load": "❌ Error al cargar JSON: {error}"
+  }
+}

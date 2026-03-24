@@ -45,10 +45,10 @@ st.sidebar.title(_("sidebar.title"))
 
 # Language Selector
 selected_lang = st.sidebar.selectbox(
-    "🌍 Language / Langue",
+    "🌍 Language / Langue / Idioma",
     options=i18n.SUPPORTED_LANGS,
     index=i18n.SUPPORTED_LANGS.index(st.session_state.lang),
-    format_func=lambda x: "English" if x == "en" else "Français"
+    format_func=lambda x: {"en": "English", "fr": "Français", "es": "Español"}.get(x, x)
 )
 if selected_lang != st.session_state.lang:
     i18n.change_lang(selected_lang)
