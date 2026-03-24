@@ -3,7 +3,7 @@ import streamlit as st
 import os
 
 DEFAULT_LANG = "en"
-SUPPORTED_LANGS = ["en", "fr", "es"]
+SUPPORTED_LANGS = ["en", "fr", "es", "zh"]
 
 def load_translations(lang):
     """Load JSON translation file."""

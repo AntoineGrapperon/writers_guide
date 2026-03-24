@@ -1,0 +1,166 @@
+{
+  "sidebar": {
+    "title": "❄️ Snowflake 架构师",
+    "nav_header": "📖 我的小说",
+    "active_novel": "当前小说：",
+    "new_novel": "➕ 新建小说",
+    "novel_title": "小说标题",
+    "create": "创建",
+    "delete": "🗑️ 删除当前小说",
+    "steps": [
+        "🏠 首页",
+        "1. 一句话核心 (Hook)",
+        "2. 一段话摘要",
+        "3. 角色档案",
+        "4. 一页纸大纲",
+        "5. 角色小传",
+        "6. 四页纸大纲",
+        "7. 角色详表",
+        "8. 场景列表",
+        "9. 叙事大纲",
+        "10. 初稿"
+    ]
+  },
+  "home": {
+    "welcome": "🏠 欢迎来到：{novel_name}",
+    "intro": "写小说很难。由 Randy Ingermanson 创造的 **雪花写作法 (Snowflake Method)** 通过从一个微小的创意“雪花”开始，逐步将其扩展为一个完整的故事，使写作过程变得易于管理。",
+    "what_is_title": "### ❄️ 什么是雪花写作法？",
+    "what_is_text": "与从第一页开始随缘写作的“裤子流 (Pantser)”不同，雪花写作法是一种“大纲流 (Plotter)”策略。你从一个句子开始，通过十个结构化的步骤，系统地将其扩展为一份完整的手稿。",
+    "how_to_title": "### 🛠️ 如何使用此工具：",
+    "how_to_steps": [
+      "**迭代增长：** 每一步都建立在你前一步工作的基础上。",
+      "**角色与情节：** 你将在发展故事情节和深化角色之间交替进行。",
+      "**灵活性：** 不要害怕回到之前的步骤！如果你在第 5 步发现了关于角色的新内容，请更新第 1 步以保持一致。",
+      "**自动持久化：** 当你打字时，你的工作会自动保存到你机器上的本地数据库 (`snowflake.db`) 中。",
+      "**备份与归档：** 使用侧边栏中的 **下载所有小说** 按钮导出你的整个档案以妥善保管。"
+    ],
+    "get_started_title": "### 🚀 开始使用：",
+    "get_started_text": "在侧边栏中选择 **“1. 一句话核心 (Hook)”** 开始你的旅程！"
+  },
+  "step1": {
+    "header": "第 1 步：一句话核心 (Hook)",
+    "info": "写一个总结你小说的单句。尽量少于 15 个字，并避免使用角色名字。",
+    "label": "输入你的核心句：",
+    "placeholder": "例如：一位科学家发现了一种与树木交流的方法，但它们只想抱怨。",
+    "word_count": "**字数统计：** {count} / 15",
+    "warning": "⚠️ 你的句子有点长！尽量保持在 15 个字以内以获得最大影响力。",
+    "success": "✅ 太棒了！这是一个简洁有力的核心句。"
+  },
+  "step2": {
+    "header": "第 2 步：一段话摘要",
+    "markdown": "将你的一句话核心扩展为一个完整的段落，包含 **五个句子**：\n1.  **铺垫 (Setup)：** 介绍故事和角色。\n2.  **灾难 1 (Disaster 1)：** 第一个主要冲突或挫折。\n3.  **灾难 2 (Disaster 2)：** 冲突升级。\n4.  **灾难 3 (Disaster 3)：** 高潮或转折点。\n5.  **结局 (Ending)：** 解决方案。",
+    "expander_label": "ℹ️ 为什么要用这种结构？",
+    "expander_info": "这种“三个灾难 + 结局”的结构确保你的故事从一开始就有不断上升的张力和清晰的弧线。",
+    "label": "起草你的摘要：",
+    "placeholder": "句子 1 (铺垫)... 句子 2 (灾难 1)... 句子 3 (灾难 2)... 句子 4 (灾难 3)... 句子 5 (结局)...",
+    "sentence_count": "**句子统计：** {count} / 5",
+    "success": "✅ 结构完美！你正好有 5 个句子。",
+    "warning": "⚠️ 你的句子超过了 5 个。尝试合并想法以保持有力。",
+    "info": "你有 {count} 个句子。继续写直到达到 5 个！"
+  },
+  "step3": {
+    "header": "第 3 步：角色档案",
+    "markdown": "每个故事都由其角色驱动。为你的每个主要角色定义以下内容：\n*   **动机 (Motivation)：** 他们抽象地想要什么？\n*   **目标 (Goal)：** 他们的具体目标是什么？\n*   **冲突 (Conflict)：** 是什么阻止他们达到该目标？\n*   **顿悟 (Epiphany)：** 他们学到了什么或如何改变？",
+    "char_name_placeholder": "角色姓名",
+    "delete_help": "删除此角色",
+    "motivation_label": "动机 (抽象欲望)",
+    "goal_label": "目标 (具体对象)",
+    "conflict_label": "冲突 (障碍)",
+    "epiphany_label": "顿悟 (学到的教训)",
+    "add_character": "➕ 添加角色",
+    "default_name": "主角"
+  },
+  "step4": {
+    "header": "第 4 步：一页纸大纲",
+    "markdown": "将 **第 2 步** 中的五个句子扩展为一个完整的段落。\n*   前四个段落应以 **灾难** 结尾。\n*   最后一段应讲述 **结局**。",
+    "prompt_fallback": "(第 2 步中未提供摘要)",
+    "labels": ["1. 铺垫", "2. 灾难 1", "3. 灾难 2", "4. 灾难 3", "5. 结局"],
+    "prompt_caption": "提示：{prompt}",
+    "para_label": "段落 {num}"
+  },
+  "step5": {
+    "header": "第 5 步：角色小传",
+    "markdown": "为你的每个主要角色写一页纸的简介。\n这些简介应 **从该角色的视角** 讲述故事。",
+    "no_chars_warning": "⚠️ 未找到角色。请先转到 **第 3 步：角色档案** 添加你的演员阵容。",
+    "expander_label": "📖 POV 小传：{name}",
+    "ref_header": "**参考 (第 3 步)：**",
+    "motivation": "**动机：** {val}",
+    "goal": "**目标：** {val}",
+    "conflict": "**冲突：** {val}",
+    "synopsis_label": "{name} 的小传"
+  },
+  "step6": {
+    "header": "第 6 步：四页纸大纲",
+    "markdown": "将你的一页纸大纲扩展为更详细的叙述。\n在完整的雪花写作法中，这大约是四页文字。",
+    "labels": ["1. 详细铺垫", "2. 灾难 1 扩展", "3. 灾难 2 扩展", "4. 灾难 3 扩展", "5. 结局扩展"],
+    "ref_expander": "📄 参考：第 4 步段落",
+    "empty_ref": "*(空)*",
+    "expansion_label": "{label} 的扩展"
+  },
+  "step7": {
+    "header": "第 7 步：角色详表",
+    "markdown": "深化你的角色。充实他们的身体特征、历史，最重要的是，\n他们在故事结束时将如何改变。",
+    "expander_label": "👤 角色详表：{name}",
+    "ref_caption": "第 3/5 步参考",
+    "goal": "**目标：** {val}",
+    "conflict": "**冲突：** {val}",
+    "epiphany": "**顿悟：** {val}",
+    "age_label": "年龄 / 出生日期",
+    "appearance_label": "外貌特征",
+    "backstory_label": "历史 / 背景故事",
+    "personality_label": "性格特征",
+    "arc_label": "角色弧光 (如何改变)"
+  },
+  "step8": {
+    "header": "第 8 步：场景列表",
+    "markdown": "将你的四页纸大纲分解为场景列表。\n每个场景都应有一个清晰的视点 (POV) 角色和一个特定的目的。",
+    "sections": ["铺垫", "灾难 1", "灾难 2", "灾难 3", "结局"],
+    "default_pov": "主角",
+    "section_expander": "📂 部分 {num}：{label}",
+    "ref_caption": "参考 (第 6 步扩展)：",
+    "empty_ref": "*(第 6 步无内容)*",
+    "pov_label": "POV 角色",
+    "loc_label": "地点",
+    "move_label": "移动",
+    "desc_label": "这个场景发生了什么？",
+    "add_scene": "➕ 添加场景到 {label}",
+    "tip": "💡 小贴士：使用箭头重新排序场景，以优化各部分内部和之间的叙事流程。"
+  },
+  "step9": {
+    "header": "第 9 步：叙事大纲",
+    "markdown": "将 **第 8 步场景列表** 中的每个场景扩展为详细的叙事大纲。\n为了清晰起见，场景按其叙事部分组织。",
+    "no_scenes_warning": "⚠️ 未找到场景。请先转到 **第 8 步：场景列表** 定义你的场景。",
+    "scene_expander": "🎬 场景 {num}：{desc}...",
+    "ref_caption": "POV：{pov} | 地点：{loc}",
+    "brief_label": "**简介：** {desc}",
+    "outline_label": "场景 {num} 的详细大纲"
+  },
+  "step10": {
+    "header": "第 10 步：初稿",
+    "markdown": "是时候写作了！从你的大纲中选择一个场景并开始起草。\n你之前的步骤计划可作为参考。",
+    "no_scenes_warning": "⚠️ 未找到场景。请先完成前面的步骤。",
+    "select_label": "选择一个场景开始写作：",
+    "option_label": "场景 {num} ({section})：{desc}...",
+    "ref_header": "📜 参考",
+    "pov_label": "**POV：** {val}",
+    "brief_label": "**简介：** {val}",
+    "outline_expander": "📝 场景大纲 (第 9 步)",
+    "empty_outline": "*(未找到大纲)*",
+    "traits_expander": "👤 角色特征",
+    "no_traits": "未找到此 POV 的角色详表。",
+    "appearance": "**外貌：** {val}",
+    "backstory": "**背景：** {val}",
+    "arc": "**弧光：** {val}",
+    "writing_header": "✍️ 正在写作：场景 {num}",
+    "prose_placeholder": "在这里写下你的正文：",
+    "word_count": "此场景字数统计：{count}"
+  },
+  "export_import": {
+    "download_label": "💾 下载所有小说 (JSON)",
+    "import_label": "📂 导入档案/草稿 (JSON)",
+    "import_success_archive": "✅ 档案已导入并保存到数据库！",
+    "import_success_draft": "✅ 草稿已作为 '{name}' 导入并保存到数据库",
+    "import_error_format": "❌ 无效的 JSON 格式。",
+    "import_error_load": "❌ 加载 JSON 时出错：{error}"
+  }
+}
